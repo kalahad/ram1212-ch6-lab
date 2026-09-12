@@ -845,8 +845,10 @@ const SHOP_A = ['ชานม','ไข่มุก','บราวน์ชูก
 const SHOP_B = ['พี่หมี','ลุงหนวด','ป้าแดง','น้องแมว','เฮียโอ๋','คุณครู','เจ๊ม้อย','พี่บอย'];
 const SHOP_C = ['สาขาราม','หน้ามอ','ซอย 8','ตลาดนัด','ชั้น 1 คณะวิศวฯ','หลังหอ'];
 
+/* รหัสทีม: คำนวณจากรหัสนักศึกษาแบบตายตัว (ไม่ผสมเวลา)
+   เพื่อให้หน้าครั้งที่ 2 ตรวจย้อนกลับได้ว่ารหัสทีมตรงกับรหัสนักศึกษาจริง */
 function makeCode(sid){
-  let h=0; const s=(sid||'')+'|'+Date.now();
+  let h=0; const s='RAM1212-CH6|'+String(sid||'').trim();
   for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; }
   const AB='ACDEFGHJKLMNPQRTUVWXY3479';
   let out=''; for(let i=0;i<6;i++){ out+=AB[h%AB.length]; h=Math.floor(h/AB.length)+7919; }
@@ -861,7 +863,7 @@ function paintShop(){
     '<div class="mini">ร้านของ '+esc(s.name)+' · '+esc(s.sid)+'</div>'+
     '<div class="big" style="color:var(--teal-d)">'+esc(s.shop)+'</div>'+
     '<div style="margin-top:8px">รหัสทีม <b style="font-size:22px;letter-spacing:.18em">'+esc(s.team)+'</b></div>'+
-    '<div class="mini" style="margin-top:6px">ถ่ายรูปหน้าจอนี้เก็บไว้ · สัปดาห์หน้าต้องใช้รหัสนี้เพื่อดึงคะแนนสะสมกลับมา</div></div>';
+    '<div class="mini" style="margin-top:6px">ถ่ายรูปหน้าจอนี้เก็บไว้ · <b>ครั้งที่ 2 ต้องใช้รหัสทีมนี้เพื่อเข้าห้อง</b> และดึงคะแนนสะสมกลับมา</div></div>';
 }
 $('#btnOpenShop').onclick = ()=>{
   const n=$('#inName').value.trim(), sid=$('#inSid').value.trim();

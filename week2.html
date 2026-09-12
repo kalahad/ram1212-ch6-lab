@@ -130,8 +130,8 @@ window.ramWaUrl = (function(){
 <!-- ============================================================
      ประตูเข้าสนามแข่ง (Access Gate) · RAM1212 ผู้ประกอบการรุ่นใหม่
      รับรหัสได้ 2 รูปแบบ
-       1) รหัสนักศึกษาตัวเลข 10 หลัก  (เช่น 69XXXXXXXX)
-       2) รหัสผ่านรวมของผู้สอน        (ru2569)
+       1) รหัสนักศึกษาตัวเลข 10 หลัก + รหัสทีม 6 ตัวจากครั้งที่ 1 (ต้องตรงคู่กัน)
+       2) รหัสผ่านรวมของผู้สอน (ru2569) — ใช้เปิดให้ผู้ที่ไม่ได้มาครั้งที่ 1
      หมายเหตุ: เป็นการกั้นระดับหน้าจอฝั่งไคลเอนต์ เพื่อความเป็นระเบียบของคลาส
      ไม่ใช่กลไกยืนยันตัวตนเชิงความปลอดภัย
      ============================================================ -->
@@ -160,22 +160,28 @@ html.ramgate-locked, html.ramgate-locked body{overflow:hidden !important}
 #ramGate button:hover{filter:brightness(1.09)}
 #ramGate button:active{filter:brightness(.95)}
 #ramGate .gmsg{min-height:20px;margin-top:12px;font-size:13px;font-weight:600;color:#D64545;line-height:1.5}
+#ramGate .ghint{margin-top:10px;font-size:12.5px;color:#6B7280;line-height:1.6}
+#ramGate .ghint a{color:#0a5c5b;font-weight:700;text-decoration:underline}
 #ramGate .gfoot{margin-top:14px;padding-top:14px;border-top:1px solid #E0E4E8;font-size:12.5px;color:#6B7280}
 </style>
 <div id="ramGate" role="dialog" aria-modal="true" aria-label="กรอกรหัสผ่านเพื่อเข้าสู่สนามแข่ง">
   <div class="gcard">
     <div class="glock"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10.4" width="16" height="10.6" rx="2.6"/><path d="M8 10.4V7.2a4 4 0 0 1 8 0v3.2"/></svg></div>
     <h2>กรอกรหัสผ่านเพื่อเข้าสู่สนามแข่ง</h2>
-    <p class="gsub">กรอกรหัสนักศึกษา 10 หลัก (เช่น 69XXXXXXXX) หรือรหัสผ่านที่ได้รับจากผู้สอน เพื่อเข้าสู่ชุดเกมบทเรียน RAM1212</p>
-    <input id="ramGateIn" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="กรอกรหัสผ่าน" aria-label="รหัสผ่าน">
+    <p class="gsub">ครั้งที่ 2 เปิดให้เฉพาะผู้ที่มีรหัสทีมจากครั้งที่ 1 กรอกรหัสนักศึกษา 10 หลัก (เช่น 69XXXXXXXX) และรหัสทีม 6 ตัวเพื่อเข้าสู่สนามแข่ง</p>
+    <input id="ramGateIn" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="รหัสนักศึกษา 10 หลัก" aria-label="รหัสนักศึกษา">
+    <input id="ramGateTeam" type="text" autocomplete="off" spellcheck="false" placeholder="รหัสทีมจากครั้งที่ 1" aria-label="รหัสทีมจากครั้งที่ 1" style="margin-top:10px;text-transform:uppercase">
     <button id="ramGateGo" type="button">เข้าสู่สนามแข่ง</button>
     <div class="gmsg" id="ramGateMsg" role="status"></div>
+    <div class="ghint">ยังไม่มีรหัสทีม? <a id="ramGateW1" href="week1.html">ทำสถานี 0 ของครั้งที่ 1 เพื่อรับรหัสทีม</a> หรือขอรหัสจากอาจารย์หน้าห้อง</div>
     <div class="gfoot">RAM1212 · ผู้ประกอบการรุ่นใหม่</div>
   </div>
 </div>
 <script>
 (function(){
-  var KEY='ram1212_gate', PASS='ru2569', SID=/^[0-9]{10}$/;
+  /* ใช้คีย์จำสถานะแยกจากหน้าอื่น เพื่อไม่ให้การปลดล็อกหน้าครั้งที่ 1
+   หรือหน้าเมนู พาเข้าหน้าครั้งที่ 2 ได้โดยไม่ต้องใช้รหัสทีม */
+  var KEY='ram1212_gate_w2', PASS='ru2569', SID=/^[0-9]{10}$/;
   var el=document.getElementById('ramGate');
   function remove(){ if(el && el.parentNode) el.parentNode.removeChild(el); }
   function saved(){
@@ -184,7 +190,32 @@ html.ramgate-locked, html.ramgate-locked body{overflow:hidden !important}
   }
   if(saved()){ remove(); return; }
   document.documentElement.classList.add('ramgate-locked');
-  var inp=document.getElementById('ramGateIn'), msg=document.getElementById('ramGateMsg');
+  var inp=document.getElementById('ramGateIn'),
+      tin=document.getElementById('ramGateTeam'),
+      msg=document.getElementById('ramGateMsg');
+
+  /* รหัสทีมต้องคำนวณด้วยสูตรเดียวกับสถานี 0 ของครั้งที่ 1 */
+  function teamFor(sid){
+    var s='RAM1212-CH6|'+String(sid||'').trim(), h=0;
+    for(var i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; }
+    var AB='ACDEFGHJKLMNPQRTUVWXY3479', out='';
+    for(var j=0;j<6;j++){ out+=AB[h%AB.length]; h=Math.floor(h/AB.length)+7919; }
+    return out;
+  }
+  /* ถ้าเครื่องนี้เคยเล่นครั้งที่ 1 มาแล้ว เติมให้อัตโนมัติ กดปุ่มเดียวผ่านได้ */
+  try{
+    var st=JSON.parse(localStorage.getItem('ram1212_score')||'null');
+    if(st && st.sid) inp.value=st.sid;
+    if(st && st.team) tin.value=st.team;
+  }catch(e){}
+
+  /* ส่งต่อค่า wa ไปยังลิงก์ครั้งที่ 1 ในข้อความช่วยเหลือ */
+  try{
+    var wa = window.ramWaUrl ? window.ramWaUrl() : '';
+    var a = document.getElementById('ramGateW1');
+    if(wa && a) a.setAttribute('href', 'week1.html#wa=' + encodeURIComponent(wa));
+  }catch(e){}
+
   function pass(v){
     try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){}
     document.documentElement.classList.remove('ramgate-locked');
@@ -192,20 +223,36 @@ html.ramgate-locked, html.ramgate-locked body{overflow:hidden !important}
     try{ window.dispatchEvent(new Event('resize')); }catch(e){}
     try{ if(typeof window.ramGatePrefill==='function') window.ramGatePrefill(); }catch(e){}
   }
+  function bad(el, text){
+    el.classList.add('bad'); msg.textContent=text;
+    setTimeout(function(){ el.classList.remove('bad'); }, 1800);
+  }
   function submit(){
     var norm=(inp.value||'').trim().replace(/[\s-]/g,'');
-    if(norm.toLowerCase()===PASS){ pass({ok:true, mode:'pass', ts:Date.now()}); return; }
-    if(SID.test(norm)){ pass({ok:true, mode:'sid', sid:norm, ts:Date.now()}); return; }
-    inp.classList.add('bad');
-    msg.textContent = /^[0-9]+$/.test(norm)
-      ? 'รหัสนักศึกษาต้องเป็นตัวเลข 10 หลัก'
-      : 'รหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง';
-    setTimeout(function(){ inp.classList.remove('bad'); }, 1800);
+    var team=(tin.value||'').trim().replace(/[\s-]/g,'').toUpperCase();
+
+    /* รหัสผู้สอน: เปิดได้ทันทีโดยไม่ต้องใช้รหัสทีม (สำหรับผู้เรียนที่ไม่ได้มาครั้งที่ 1) */
+    if(norm.toLowerCase()===PASS || team.toLowerCase()===PASS){
+      pass({ok:true, mode:'pass', ts:Date.now()}); return;
+    }
+    if(!SID.test(norm)){
+      bad(inp, /^[0-9]+$/.test(norm) ? 'รหัสนักศึกษาต้องเป็นตัวเลข 10 หลัก'
+                                     : 'กรอกรหัสนักศึกษา 10 หลักให้ถูกต้องก่อนครับ');
+      return;
+    }
+    if(!team){ bad(tin, 'ต้องกรอกรหัสทีม 6 ตัวที่ได้จากครั้งที่ 1'); return; }
+    if(team !== teamFor(norm)){
+      bad(tin, 'รหัสทีมไม่ตรงกับรหัสนักศึกษานี้ · ถ้ายังไม่ได้ทำครั้งที่ 1 ให้ไปรับรหัสที่สถานี 0 ก่อน');
+      return;
+    }
+    pass({ok:true, mode:'team', sid:norm, team:team, ts:Date.now()});
   }
   document.getElementById('ramGateGo').addEventListener('click', submit);
-  inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
-  inp.addEventListener('input', function(){ msg.textContent=''; });
-  setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 80);
+  [inp, tin].forEach(function(el){
+    el.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
+    el.addEventListener('input', function(){ msg.textContent=''; });
+  });
+  setTimeout(function(){ try{ (inp.value ? tin : inp).focus(); }catch(e){} }, 80);
 })();
 </script>
 
@@ -1363,12 +1410,14 @@ $$('.tab').forEach((t,i)=> t.addEventListener('click', ()=>{ if(i===6) paintBadg
 /* เติมรหัสนักศึกษาที่กรอกไว้หน้าประตูเข้าสนามแข่งให้อัตโนมัติ (เฉพาะช่องที่ยังว่าง) */
 window.ramGatePrefill = function(){
   try{
-    var v=JSON.parse(localStorage.getItem('ram1212_gate')||'null');
-    if(!v || v.mode!=='sid' || !v.sid) return;
+    var v=JSON.parse(localStorage.getItem('ram1212_gate_w2')||localStorage.getItem('ram1212_gate')||'null');
+    if(!v || !v.sid) return;
     ['inSid','cSid'].forEach(function(id){
       var el=document.getElementById(id);
       if(el && !el.value) el.value=v.sid;
     });
+    var t=document.getElementById('inTeam');
+    if(t && !t.value && v.team) t.value=v.team;
   }catch(e){}
 };
 window.addEventListener('load', window.ramGatePrefill);
