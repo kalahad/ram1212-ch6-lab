@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>คู่มืออาจารย์ · RAM1212 บทที่ 6 Interactive Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0E7C7B; --teal-d:#0a5c5b; --dark:#1B2026; --gray:#6B7280;
+  --light:#E7F3F3; --panel:#F4F5F7; --border:#E0E4E8;
+  --orange:#E85D4A; --blue:#3D4A9E; --amber:#F2B01E; --violet:#7C4DBE;
+  --green:#1F9D55; --red:#D64545; --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Thai','Sarabun',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:#fafbfc;color:var(--dark);line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 72px}
+header{background:linear-gradient(135deg,var(--teal) 0%,#0a5f5e 100%);color:#fff;padding:22px 0 20px;margin-bottom:18px}
+header .wrap{padding-bottom:0}
+.kicker{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.78;font-weight:600}
+h1{font-size:clamp(19px,3.4vw,29px);font-weight:700;margin:4px 0 6px;line-height:1.25}
+.sub{font-size:13.5px;opacity:.88}
+.hbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:999px;
+  padding:5px 13px;font-size:12.5px;font-weight:600}
+nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;margin-bottom:18px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:#fff;border:1px solid var(--border);border-radius:999px;padding:9px 16px;
+  font-family:inherit;font-size:13.5px;font-weight:600;color:var(--gray);cursor:pointer;transition:.16s;white-space:nowrap}
+.tab:hover{border-color:var(--teal);color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:19px;margin-bottom:15px}
+h2{font-size:18.5px;font-weight:700;margin-bottom:4px}
+h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.lead{font-size:13.5px;color:var(--gray);margin-bottom:14px}
+.note{font-size:12.5px;color:var(--gray);margin-top:12px;line-height:1.6}
+.lesson{background:var(--light);border-radius:10px;padding:12px 15px;font-size:13.5px;font-weight:600;
+  color:var(--teal-d);margin-top:14px;border-left:4px solid var(--teal)}
+.warnbox{background:#FFF6E5;border-left:4px solid var(--amber);border-radius:10px;padding:12px 15px;
+  font-size:13px;margin-top:12px;color:#6b4f0a}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+  background:var(--light);color:var(--teal-d);letter-spacing:.03em}
+.tag.exam{background:#E3F6E8;color:#146c33}
+.tag.bonus{background:#EDEDF2;color:#565672}
+.tag.slide{background:#EEF1FB;color:var(--blue)}
+.ctrls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:13px 0}
+button.btn{font-family:inherit;font-size:13.5px;font-weight:600;padding:9px 18px;border-radius:999px;
+  border:1px solid var(--teal);background:var(--teal);color:#fff;cursor:pointer;transition:.15s}
+button.btn:hover{background:var(--teal-d);border-color:var(--teal-d)}
+button.btn.ghost{background:#fff;color:var(--teal)}
+button.btn.ghost:hover{background:var(--light)}
+button.btn.warn{background:var(--orange);border-color:var(--orange)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+input.fld,select.fld,textarea.fld{font-family:inherit;font-size:14px;padding:9px 13px;border:1px solid var(--border);
+  border-radius:10px;background:#fff;color:var(--dark);width:100%}
+input.fld:focus,textarea.fld:focus{outline:2px solid var(--teal);outline-offset:-1px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:13px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:11px}
+.mini{font-size:12px;color:var(--gray)}
+.big{font-size:30px;font-weight:700;line-height:1.1}
+.bar{height:11px;border-radius:999px;background:var(--panel);overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--teal);border-radius:999px;transition:width .5s ease}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:13.8px;padding:11px 14px;
+  border:1px solid var(--border);background:#fff;border-radius:11px;margin-bottom:8px;cursor:pointer;transition:.14s}
+.opt:hover{border-color:var(--teal);background:var(--light)}
+.opt.right{border-color:var(--green);background:#EAF8EF;font-weight:600}
+.opt.wrong{border-color:var(--red);background:#FDECEC}
+.opt.picked{border-color:var(--teal);background:var(--light);font-weight:600}
+.fb{font-size:13.3px;padding:11px 14px;border-radius:11px;margin-top:6px;line-height:1.6}
+.fb.ok{background:#EAF8EF;color:#12613a;border-left:4px solid var(--green)}
+.fb.no{background:#FDECEC;color:#8c2323;border-left:4px solid var(--red)}
+.fb.info{background:var(--light);color:var(--teal-d);border-left:4px solid var(--teal)}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border-radius:999px;
+  padding:5px 12px;font-size:12.5px;font-weight:600}
+.stat{background:var(--panel);border-radius:12px;padding:13px 15px}
+.stat .k{font-size:11.5px;color:var(--gray);font-weight:600;letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;line-height:1.2;margin-top:2px}
+table.tb{width:100%;border-collapse:collapse;font-size:13px}
+table.tb th,table.tb td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+table.tb th{background:var(--panel);font-weight:700}
+.scroll{overflow-x:auto}
+footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--border);font-size:12.5px;color:var(--gray)}
+.shake{animation:shk .45s}
+@keyframes shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.pop{animation:pp .4s}
+@keyframes pp{0%{transform:scale(.82);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.hide{display:none!important}
+canvas{max-width:100%}
+</style>
+<style>
+code{background:var(--panel);padding:2px 6px;border-radius:6px;font-size:12.5px}
+@media print{ header{background:#0E7C7B!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card{break-inside:avoid;page-break-inside:avoid} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kicker">คู่มืออาจารย์ · RAM1212 บทที่ 6</div>
+    <h1>Interactive Lab — ภารกิจชานมหน้ามอ</h1>
+    <div class="sub">แผนใช้งานรายคาบ · การตั้งค่า · จังหวะที่ต้องพูด · 14 และ 21 กันยายน 2569</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>สิ่งที่ได้รับ</h2>
+    <div class="scroll"><table class="tb">
+      <tr><th>ไฟล์</th><th>ใช้เมื่อไร</th><th>ใครเปิด</th></tr>
+      <tr><td><b>ram1212-ch6-lab-week1.html</b></td><td>จันทร์ 14 ก.ย.</td><td>นักศึกษาเปิดบนมือถือ · อาจารย์เปิดบนจอหน้าห้อง</td></tr>
+      <tr><td><b>ram1212-ch6-lab-week2.html</b></td><td>จันทร์ 21 ก.ย.</td><td>เหมือนกัน</td></tr>
+      <tr><td><b>ram1212-ch6-AppsScript.gs</b></td><td>ติดตั้งครั้งเดียวก่อนสอน (ไม่บังคับ)</td><td>อาจารย์</td></tr>
+      <tr><td><b>ram1212-ch6-teacher-guide.html</b></td><td>เอกสารนี้</td><td>อาจารย์</td></tr>
+    </table></div>
+    <div class="lesson">ทั้งสองไฟล์เป็น HTML ไฟล์เดียวจบ ไม่ต้องติดตั้งอะไร ไม่ต้องล็อกอิน เปิดได้ทั้งบนมือถือและคอมพิวเตอร์ และทำงานได้แม้ไม่มีอินเทอร์เน็ต</div>
+  </div>
+
+  <div class="card">
+    <h2>เตรียมก่อนสอน · 3 ขั้น</h2>
+    <h3>ขั้นที่ 1 · แก้บล็อก CONFIG (จำเป็น)</h3>
+    <p class="lead">เปิดไฟล์ด้วย Notepad หรือ VS Code แล้วมองหาบรรทัด <code>const CONFIG = {</code> ซึ่งอยู่ใกล้ท้ายไฟล์ · แก้เฉพาะในบล็อกนี้</p>
+    <div class="scroll"><table class="tb">
+      <tr><th>ค่า</th><th>ไฟล์</th><th>ควรแก้เป็น</th></tr>
+      <tr><td><code>surveyUrl</code></td><td>ครั้งที่ 1</td><td>ลิงก์แบบสำรวจชานมของห้อง (ตัวเดียวกับ QR สไลด์หน้า 36)</td></tr>
+      <tr><td><code>classSize</code></td><td>ครั้งที่ 1</td><td>จำนวนนักศึกษาที่คาดว่าเข้าเรียน</td></tr>
+      <tr><td><code>SUCCESS7</code> · <code>FAIL7</code></td><td>ครั้งที่ 1</td><td><b>คัดลอกถ้อยคำจากสไลด์หน้า 6–7 และหน้า 8 มาวางทับ</b> ข้อความที่ใส่ไว้เป็นฉบับร่างตามหลักทั่วไป ยังไม่ได้ตรงกับสไลด์ของอาจารย์ทุกคำ</td></tr>
+      <tr><td><code>classResult</code></td><td>ครั้งที่ 2</td><td>ผลสำรวจจริงของห้อง (ชื่อแบรนด์ · จำนวนเสียง · T3B แยกเพศ · Insight) ใส่ก่อนเข้าสอนคาบ 3</td></tr>
+      <tr><td><code>t3bSets</code></td><td>ครั้งที่ 2</td><td>ชุดคะแนน 1–10 สำหรับเครื่อง T3B (ค่าเริ่มต้นใช้สอนได้เลย)</td></tr>
+    </table></div>
+
+    <h3 style="margin-top:16px">ขั้นที่ 2 · เชื่อมข้อมูลสด (ไม่บังคับ แต่แนะนำ)</h3>
+    <p class="lead">ทำตามหัวคอมเมนต์ในไฟล์ <code>ram1212-ch6-AppsScript.gs</code> แล้วนำ URL ที่ได้ไปวางที่ <code>sheetsWebAppUrl</code> ทั้งสองไฟล์ · เมื่อเชื่อมแล้ว มาตรวัดผู้ตอบ กระดานคะแนน และคำตอบของทุกคนจะไหลเข้าชีตเดียว</p>
+
+    <h3 style="margin-top:16px">ขั้นที่ 3 · ส่งไฟล์ถึงนักศึกษา</h3>
+    <p class="lead">อัปโหลดไฟล์ HTML ขึ้น Google Drive → ตั้งค่าแชร์เป็น "ทุกคนที่มีลิงก์" → ย่อลิงก์แล้วทำ QR ใส่สไลด์หน้าแรกของคาบ · หรือส่งผ่านกลุ่มไลน์ของห้องก็ได้</p>
+    <div class="warnbox">ข้อควรระวัง: ถ้าส่งผ่าน Drive ให้นักศึกษากด <b>ดาวน์โหลด</b> แล้วเปิดด้วยเบราว์เซอร์ เพราะ Drive แสดงตัวอย่าง HTML ไม่ได้ · ทางที่สะดวกที่สุดคืออัปขึ้นพื้นที่เว็บของคณะแล้วแจกลิงก์ตรง</div>
+  </div>
+
+  <div class="card">
+    <h2>แผนใช้งาน · ครั้งที่ 1 (14 ก.ย.)</h2>
+    <div class="scroll"><table class="tb">
+      <tr><th>คาบ</th><th>นาที</th><th>สไลด์</th><th>สถานีในแล็บ</th><th>จังหวะที่ต้องพูด</th></tr>
+      <tr><td rowspan="3">1</td><td>0–3</td><td>—</td><td>0 · ตั้งร้าน</td><td>"เปิดร้านของตัวเองก่อน แล้วจดรหัสทีมไว้ให้ดี สัปดาห์หน้าต้องใช้"</td></tr>
+      <tr><td>1–25</td><td>1, 6–8</td><td>1 · สุสานร้านดัง</td><td>ให้ชันสูตรคนละ 2–3 ร้าน แล้วฉายกราฟรวมของห้องขึ้นจอ</td></tr>
+      <tr><td>39–50</td><td>9–10</td><td>1 · คำถามสุดท้าย + ใบสั่งยา</td><td>"ถ้าเลือกได้ข้อเดียวที่อันตรายที่สุด" แล้วให้ทั้งห้องตอบพร้อมกัน</td></tr>
+      <tr><td rowspan="3">2</td><td>1–27</td><td>11–23</td><td>2 · มืดบอด vs มีข้อมูล + เกมการ์ด</td><td>ฉายเครื่องจำลองบนจอใหญ่ ให้ทั้งห้องดูเส้นสองเส้นแยกจากกันพร้อมกัน</td></tr>
+      <tr><td>28–38</td><td>24–30</td><td>2 · กระเป๋านักวิเคราะห์</td><td>ให้คนหนึ่งลอง Word บนจอ แล้วทั้งห้องจะได้เห็นแอนิเมชันดีดกลับ</td></tr>
+      <tr><td>39–50</td><td>31–36</td><td>3 · มาตรวัดพลังข้อมูล</td><td>เปิดมาตรวัดค้างบนจอตลอดช่วงตอบแบบสำรวจ ประกาศทุกครั้งที่ทะลุหมุด</td></tr>
+      <tr><td>3</td><td>21–50</td><td>45–50</td><td>4 · จับเซลล์ให้ทัน</td><td>แข่งเป็นกลุ่ม 3–4 คนต่อเครื่อง เก็บคะแนนสูงสุดของแต่ละกลุ่มขึ้นกระดาน</td></tr>
+      <tr><td rowspan="2">4</td><td>1–30</td><td>52–60</td><td>5 · เครื่องคิดเลขปริศนา</td><td>ด่าน 3 คือด่านสำคัญ ให้ทุกคนทายก่อนแล้วค่อยกดรัน อย่าเฉลยก่อน</td></tr>
+      <tr><td>46–50</td><td>—</td><td>6 · หน้าจอล็อก</td><td>"ห้องนี้มีคำตอบอยู่แล้ว แค่ยังไม่มีใครอ่านมันออก — สัปดาห์หน้าเราจะผ่าข้อมูลชุดนี้กัน"</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>แผนใช้งาน · ครั้งที่ 2 (21 ก.ย.)</h2>
+    <div class="scroll"><table class="tb">
+      <tr><th>คาบ</th><th>นาที</th><th>สไลด์</th><th>สถานีในแล็บ</th><th>จังหวะที่ต้องพูด</th></tr>
+      <tr><td rowspan="2">1</td><td>1–10</td><td>1</td><td>0 · เช็คอิน + อุ่นเครื่อง 5 ข้อ</td><td>ให้กรอกรหัสทีมสัปดาห์ที่แล้ว คะแนนสะสมจะกลับมา</td></tr>
+      <tr><td>11–45</td><td>2–16</td><td>1 · ศาลตัดสิน IF</td><td>ให้ทายก่อนโยกคันโยกทุกครั้ง · ตอนรัน "ตัดเกรดทั้งห้อง" ให้หยุดที่ชื่อคนที่ตกหล่น</td></tr>
+      <tr><td rowspan="2">2</td><td>1–12</td><td>23–25</td><td>2 · เครื่องแปลงเวลา</td><td>ให้ทุกคนแตะเดือนเกิดตัวเอง แล้วดูฮิสโตแกรมของห้องก่อตัว</td></tr>
+      <tr><td>13–45</td><td>35–50</td><td>3 · โรงล้างข้อมูล</td><td>ชี้แถวสีแดงแล้วบอกว่า "นี่คือคำตอบของคนในห้องนี้ที่เผลอเคาะ space"</td></tr>
+      <tr><td rowspan="2">3</td><td>1–38</td><td>51–76</td><td>4 · ต่อบล็อกสูตร + เครื่อง T3B</td><td>สลับไปชุด B แล้วชี้ว่า Mean ใกล้กันแต่ T3B ต่างกันมาก</td></tr>
+      <tr><td>39–50</td><td>—</td><td>4 · นาทีเปิดซอง</td><td><b>จุดสูงสุดของทั้งสองสัปดาห์</b> · ให้ทุกคนทายแบรนด์และกดยืนยันก่อน ห้ามเฉลยเด็ดขาด แล้วนับ 3-2-1 พร้อมกัน</td></tr>
+      <tr><td rowspan="3">4</td><td>1–18</td><td>80–85</td><td>5 · เวทีพิตช์</td><td>ให้แต่ละทีมส่ง 1 ประโยค แล้วโหวตเลือกประโยคที่ดีที่สุด</td></tr>
+      <tr><td>19–40</td><td>—</td><td>6 · Grand Quiz</td><td>3 ข้อสุดท้ายคือด่านบอส ให้เฉลยช้า ๆ และย้อนสไลด์ทันทีถ้าผิดกันเยอะ</td></tr>
+      <tr><td>41–50</td><td>86–89</td><td>6 · ตราประทับ + รหัสจบ</td><td>"ที่เล่นสนุกมาทั้งสองสัปดาห์ คือการติวข้อสอบครบทั้ง 20 ข้อโดยไม่รู้ตัว"</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>ตราประทับ 20 ดวง = ข้อสอบ 20 ข้อ</h2>
+    <p class="lead">นักศึกษาที่เล่นครบทุกสถานีจะเก็บได้ครบ 20 ดวง · ผู้ที่ขาดครั้งที่ 1 ยังเก็บครบได้จาก Grand Quiz ในครั้งที่ 2</p>
+    <div class="scroll"><table class="tb" id="badgeTable"></table></div>
+  </div>
+
+  <div class="card">
+    <h2>กลไกที่ทำให้นักศึกษาตั้งใจโดยไม่รู้ตัว</h2>
+    <div class="scroll"><table class="tb">
+      <tr><th>กลไก</th><th>อยู่ที่ไหน</th><th>แก้ปัญหาอะไร</th></tr>
+      <tr><td>Predict → Commit → Reveal</td><td>ทุกจุดที่เป็นข้อสอบ</td><td>ฟังเฉลยแล้วลืม เพราะไม่เคยผูกมัดคำตอบของตัวเอง</td></tr>
+      <tr><td>รหัสทีมข้ามสัปดาห์</td><td>สถานี 0 ทั้งสองไฟล์</td><td>นักศึกษาหายไปในคาบที่ 2</td></tr>
+      <tr><td>ข้อมูลจริงของห้อง</td><td>มาตรวัด · โรงล้างข้อมูล · นาทีเปิดซอง</td><td>"เคสในสไลด์ไม่เกี่ยวกับชีวิตหนู"</td></tr>
+      <tr><td>ตารางคำนวณจำลองในหน้าเว็บ</td><td>สถานี 5 (ครั้งที่ 1) · สถานี 1 (ครั้งที่ 2)</td><td>เสียเวลาทุกคาบกับคนที่ล็อกอินไม่ได้</td></tr>
+      <tr><td>Cliffhanger + นับถอยหลัง</td><td>ท้ายครั้งที่ 1</td><td>ไม่มีเหตุผลให้ต้องมาสัปดาห์หน้า</td></tr>
+      <tr><td>หน้าสรุปตราประทับ</td><td>ท้ายครั้งที่ 2</td><td>นักศึกษาไม่รู้ว่าตัวเองพร้อมสอบแล้ว</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>แผนสำรองเมื่อเกิดปัญหา</h2>
+    <div class="scroll"><table class="tb">
+      <tr><th>สถานการณ์</th><th>ทำอย่างไร</th></tr>
+      <tr><td>อินเทอร์เน็ตห้องเรียนล่ม</td><td>แล็บทำงานต่อได้ทุกสถานี ยกเว้นตัวเลขรวมของห้องที่จะนับเฉพาะเครื่องตัวเอง · มาตรวัดผู้ตอบพิมพ์ด้วยมือได้</td></tr>
+      <tr><td>ผู้ตอบแบบสำรวจน้อยกว่า 20 คน</td><td>ค่าใน <code>classResult</code> ของครั้งที่ 2 เป็นตัวเลขที่ตั้งไว้ล่วงหน้าอยู่แล้ว เปิดใช้ได้ทันทีโดยไม่ต้องมีข้อมูลจริง</td></tr>
+      <tr><td>นักศึกษาลืมรหัสทีม</td><td>กดเช็คอินด้วยชื่อและรหัสนักศึกษาได้เลย ระบบจะออกรหัสใหม่ให้ · คะแนนเริ่มนับใหม่แต่เก็บตราประทับได้ครบจาก Grand Quiz</td></tr>
+      <tr><td>นักศึกษาไม่มีมือถือ</td><td>จับกลุ่ม 3–4 คนต่อเครื่อง ทุกสถานีออกแบบให้เล่นเป็นทีมได้</td></tr>
+      <tr><td>เวลาไม่พอ</td><td>ตัดได้โดยไม่กระทบข้อสอบ: เครื่องจำลอง 12 สัปดาห์ · เวทีพิตช์ · ฮิสโตแกรมวันเกิด · <b>ห้ามตัด</b> ศาลตัดสิน IF และด่าน 3 ของเครื่องคิดเลขปริศนา</td></tr>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h2>ข้อจำกัดที่ควรทราบ</h2>
+    <ul style="margin-left:18px;font-size:14px;line-height:1.9">
+      <li>ถ้อยคำของ <b>ปัจจัยความสำเร็จ 7 ประการ</b> และ <b>สาเหตุความล้มเหลว 7 ประการ</b> ในแล็บเป็นฉบับร่าง เพราะเนื้อหาในสไลด์หน้า 6–8 อยู่ในรูปภาพซึ่งดึงข้อความออกมาไม่ได้ — กรุณาคัดลอกถ้อยคำจริงจากสไลด์มาวางทับใน CONFIG ก่อนสอน เพื่อให้ตรงกับข้อสอบทุกคำ</li>
+      <li>คะแนนและตราประทับเก็บไว้ในเบราว์เซอร์ของนักศึกษาเอง · ถ้าเปิดในโหมดไม่ระบุตัวตนหรือเปลี่ยนเครื่อง ข้อมูลจะไม่ตามไป ให้ใช้รหัสทีมเป็นตัวเชื่อมแทน</li>
+      <li>แล็บนี้ทำหน้าที่เป็นสนามซ้อมและตัวเร่งความสนใจ <b>ไม่ได้แทนการบรรยายจากสไลด์</b> ทุกจุดที่ติดป้ายออกสอบ ยังต้องพูดตามสไลด์เดิมตามหลักการทองที่วางไว้ในสคริปต์</li>
+    </ul>
+  </div>
+
+  <footer>
+    RAM1212 ผู้ประกอบการรุ่นใหม่ · บทที่ 6 · คู่มืออาจารย์<br>
+    ผศ.ดร.กุลวลัญช์ วรุณสิน · ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยรามคำแหง
+  </footer>
+</div>
+
+<script>
+const EXAM_LIST = [
+  [1,'ปัจจัยความสำเร็จ 7 ประการ','ครั้งที่ 1 · ใบสั่งยา'],
+  [2,'สาเหตุล้มเหลวสำคัญที่สุด = ไม่เข้าใจตลาดและลูกค้า','ครั้งที่ 1 · คำถามสุดท้ายของสุสาน'],
+  [3,'ประโยชน์ของ Market Research','ครั้งที่ 1 · เครื่องจำลองธุรกิจ'],
+  [4,'Word ไม่ใช่เครื่องมือวิเคราะห์','ครั้งที่ 1 · กระเป๋านักวิเคราะห์'],
+  [5,'ความหมายของการวิจัยการตลาด','ครั้งที่ 1 · เครื่องจำลองธุรกิจ'],
+  [6,'Google Sheets เป็นบริการฟรี','ครั้งที่ 1 · ควิซท้ายเกมจับเซลล์'],
+  [7,'นิยามของ Function','ครั้งที่ 1 · ด่าน 1 เครื่องคิดเลขปริศนา'],
+  [8,'C5 = คอลัมน์ C แถวที่ 5','ครั้งที่ 1 · เกมจับเซลล์'],
+  [9,'ทำงานพร้อมกันได้หลายคน','ครั้งที่ 1 · ควิซท้ายเกมจับเซลล์'],
+  [10,'ไม่จำกัดเฉพาะเจ้าของไฟล์','ครั้งที่ 1 · ควิซท้ายเกมจับเซลล์'],
+  [11,'AVERAGE ละเว้นข้อความ','ครั้งที่ 1 · ด่าน 3 (กับดักของ AVERAGE)'],
+  [12,'SUM(1..10) = 55','ครั้งที่ 1 · ด่าน 2'],
+  [13,'ประเภทของการวิจัยการตลาด','ครั้งที่ 1 · ทายประเภทคำถาม'],
+  [14,'รองเท้าสีดำ → ตัดสินใจแม่นยำ','ครั้งที่ 1 · เกมการ์ด'],
+  [15,'E-Wallet → บริการใหม่','ครั้งที่ 1 · เกมการ์ด'],
+  [16,'จัดกลุ่มลูกค้า → เข้าใจตลาด','ครั้งที่ 1 · เกมการ์ด'],
+  [17,'ประโยชน์ทั้ง 4 = ถูกทุกข้อ','ครั้งที่ 1 · เกมการ์ด'],
+  [18,'CHOOSE(MONTH("2022-10-11")) = OCT','ครั้งที่ 2 · เครื่องแปลงเวลา'],
+  [19,'IF(B2>35) เมื่อ B2=35 → Fail','ครั้งที่ 2 · ศาลตัดสิน IF'],
+  [20,'IF(B2>=35) เมื่อ B2=35 → Pass','ครั้งที่ 2 · ศาลตัดสิน IF']
+];
+document.getElementById('badgeTable').innerHTML =
+  '<tr><th>ข้อ</th><th>ประเด็นข้อสอบ</th><th>เก็บได้ที่สถานี</th></tr>' +
+  EXAM_LIST.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>').join('');
+</script>
+</body>
+</html>

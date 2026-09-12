@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>RAM1212 บทที่ 6 · ครั้งที่ 1 — ภารกิจชานมหน้ามอ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0E7C7B; --teal-d:#0a5c5b; --dark:#1B2026; --gray:#6B7280;
+  --light:#E7F3F3; --panel:#F4F5F7; --border:#E0E4E8;
+  --orange:#E85D4A; --blue:#3D4A9E; --amber:#F2B01E; --violet:#7C4DBE;
+  --green:#1F9D55; --red:#D64545; --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Thai','Sarabun',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:#fafbfc;color:var(--dark);line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 72px}
+header{background:linear-gradient(135deg,var(--teal) 0%,#0a5f5e 100%);color:#fff;padding:22px 0 20px;margin-bottom:18px}
+header .wrap{padding-bottom:0}
+.kicker{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.78;font-weight:600}
+h1{font-size:clamp(19px,3.4vw,29px);font-weight:700;margin:4px 0 6px;line-height:1.25}
+.sub{font-size:13.5px;opacity:.88}
+.hbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:999px;
+  padding:5px 13px;font-size:12.5px;font-weight:600}
+nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;margin-bottom:18px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:#fff;border:1px solid var(--border);border-radius:999px;padding:9px 16px;
+  font-family:inherit;font-size:13.5px;font-weight:600;color:var(--gray);cursor:pointer;transition:.16s;white-space:nowrap}
+.tab:hover{border-color:var(--teal);color:var(--teal)}
+.tab.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:19px;margin-bottom:15px}
+h2{font-size:18.5px;font-weight:700;margin-bottom:4px}
+h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.lead{font-size:13.5px;color:var(--gray);margin-bottom:14px}
+.note{font-size:12.5px;color:var(--gray);margin-top:12px;line-height:1.6}
+.lesson{background:var(--light);border-radius:10px;padding:12px 15px;font-size:13.5px;font-weight:600;
+  color:var(--teal-d);margin-top:14px;border-left:4px solid var(--teal)}
+.warnbox{background:#FFF6E5;border-left:4px solid var(--amber);border-radius:10px;padding:12px 15px;
+  font-size:13px;margin-top:12px;color:#6b4f0a}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+  background:var(--light);color:var(--teal-d);letter-spacing:.03em}
+.tag.exam{background:#E3F6E8;color:#146c33}
+.tag.bonus{background:#EDEDF2;color:#565672}
+.tag.slide{background:#EEF1FB;color:var(--blue)}
+.ctrls{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:13px 0}
+button.btn{font-family:inherit;font-size:13.5px;font-weight:600;padding:9px 18px;border-radius:999px;
+  border:1px solid var(--teal);background:var(--teal);color:#fff;cursor:pointer;transition:.15s}
+button.btn:hover{background:var(--teal-d);border-color:var(--teal-d)}
+button.btn.ghost{background:#fff;color:var(--teal)}
+button.btn.ghost:hover{background:var(--light)}
+button.btn.warn{background:var(--orange);border-color:var(--orange)}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+input.fld,select.fld,textarea.fld{font-family:inherit;font-size:14px;padding:9px 13px;border:1px solid var(--border);
+  border-radius:10px;background:#fff;color:var(--dark);width:100%}
+input.fld:focus,textarea.fld:focus{outline:2px solid var(--teal);outline-offset:-1px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:13px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:11px}
+.mini{font-size:12px;color:var(--gray)}
+.big{font-size:30px;font-weight:700;line-height:1.1}
+.bar{height:11px;border-radius:999px;background:var(--panel);overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--teal);border-radius:999px;transition:width .5s ease}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:13.8px;padding:11px 14px;
+  border:1px solid var(--border);background:#fff;border-radius:11px;margin-bottom:8px;cursor:pointer;transition:.14s}
+.opt:hover{border-color:var(--teal);background:var(--light)}
+.opt.right{border-color:var(--green);background:#EAF8EF;font-weight:600}
+.opt.wrong{border-color:var(--red);background:#FDECEC}
+.opt.picked{border-color:var(--teal);background:var(--light);font-weight:600}
+.fb{font-size:13.3px;padding:11px 14px;border-radius:11px;margin-top:6px;line-height:1.6}
+.fb.ok{background:#EAF8EF;color:#12613a;border-left:4px solid var(--green)}
+.fb.no{background:#FDECEC;color:#8c2323;border-left:4px solid var(--red)}
+.fb.info{background:var(--light);color:var(--teal-d);border-left:4px solid var(--teal)}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border-radius:999px;
+  padding:5px 12px;font-size:12.5px;font-weight:600}
+.stat{background:var(--panel);border-radius:12px;padding:13px 15px}
+.stat .k{font-size:11.5px;color:var(--gray);font-weight:600;letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;line-height:1.2;margin-top:2px}
+table.tb{width:100%;border-collapse:collapse;font-size:13px}
+table.tb th,table.tb td{border:1px solid var(--border);padding:7px 9px;text-align:left}
+table.tb th{background:var(--panel);font-weight:700}
+.scroll{overflow-x:auto}
+footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--border);font-size:12.5px;color:var(--gray)}
+.shake{animation:shk .45s}
+@keyframes shk{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.pop{animation:pp .4s}
+@keyframes pp{0%{transform:scale(.82);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.hide{display:none!important}
+canvas{max-width:100%}
+</style>
+</head>
+<body>
+<!-- ============================================================
+     ตัวรับค่า Apps Script Web App URL · RAM1212 CH6 Lab
+     รับได้ทั้งสองรูปแบบ และรับทั้ง URL ดิบและ URL ที่เข้ารหัสแล้ว
+       ?wa=https://script.google.com/macros/s/XXXX/exec   (สะดวก แต่ค่าถูกส่งไปเซิร์ฟเวอร์)
+       #wa=https%3A%2F%2Fscript.google.com%2F...%2Fexec    (ไม่ถูกส่งไปเซิร์ฟเวอร์เลย)
+     เมื่อพบค่าครั้งแรกจะจำไว้ใน localStorage ให้ จึงเปิดหน้าแรกพร้อมพารามิเตอร์
+     ครั้งเดียว แล้วคลิกต่อไปหน้าอื่นได้โดยไม่ต้องต่อพารามิเตอร์ซ้ำ
+     ============================================================ -->
+<script>
+window.ramWaUrl = (function(){
+  var LS='sheetsWebAppUrl', cached=null, done=false;
+  function dec(v){ try{ return decodeURIComponent(v); }catch(e){ return v; } }
+  function pick(){
+    var v=null;
+    try{ v = new URLSearchParams(location.hash.replace(/^#/,'')).get('wa'); }catch(e){}
+    if(!v){ try{ v = new URLSearchParams(location.search).get('wa'); }catch(e){} }
+    if(v){
+      v = dec(v).trim();
+      if(/^https:\/\/script\.google\.com\//.test(v)){
+        try{ localStorage.setItem(LS, v); }catch(e){}
+        return v;
+      }
+      return '';
+    }
+    try{ v = localStorage.getItem(LS); }catch(e){ v=null; }
+    return (v && /^https:\/\//.test(v)) ? v : '';
+  }
+  return function(){ if(!done){ cached=pick(); done=true; } return cached; };
+})();
+</script>
+
+<!-- ============================================================
+     ประตูเข้าสนามแข่ง (Access Gate) · RAM1212 ผู้ประกอบการรุ่นใหม่
+     รับรหัสได้ 2 รูปแบบ
+       1) รหัสนักศึกษาตัวเลข 10 หลัก  (เช่น 69XXXXXXXX)
+       2) รหัสผ่านรวมของผู้สอน        (ru2569)
+     หมายเหตุ: เป็นการกั้นระดับหน้าจอฝั่งไคลเอนต์ เพื่อความเป็นระเบียบของคลาส
+     ไม่ใช่กลไกยืนยันตัวตนเชิงความปลอดภัย
+     ============================================================ -->
+<style>
+html.ramgate-locked, html.ramgate-locked body{overflow:hidden !important}
+#ramGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:linear-gradient(160deg,#f4f8f8 0%,#e7f3f3 100%);
+  font-family:'IBM Plex Sans Thai','Sarabun',system-ui,-apple-system,'Segoe UI',sans-serif}
+#ramGate .gcard{width:100%;max-width:430px;background:#fff;border:1px solid #E0E4E8;border-radius:22px;
+  padding:34px 28px 22px;text-align:center;box-shadow:0 18px 46px rgba(14,124,123,.15)}
+#ramGate .glock{width:66px;height:66px;margin:0 auto 20px;border-radius:19px;background:#E7F3F3;
+  display:flex;align-items:center;justify-content:center}
+#ramGate .glock svg{width:30px;height:30px;stroke:#0a5c5b;fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+#ramGate h2{font-size:21px;font-weight:700;color:#1B2026;margin:0 0 10px;line-height:1.35}
+#ramGate .gsub{font-size:13.5px;color:#6B7280;line-height:1.65;margin:0 0 22px}
+#ramGate input{width:100%;padding:15px 16px;font-size:16px;text-align:center;font-family:inherit;
+  border:1px solid #E0E4E8;border-radius:13px;background:#F4F5F7;color:#1B2026;
+  letter-spacing:.05em;outline:none;transition:border-color .15s,background .15s}
+#ramGate input::placeholder{letter-spacing:0;color:#9aa1ab}
+#ramGate input:focus{border-color:#0E7C7B;background:#fff}
+#ramGate input.bad{border-color:#D64545;background:#fdf4f4}
+#ramGate button{width:100%;margin-top:16px;padding:15px 16px;font-size:16px;font-weight:700;
+  color:#fff;background:linear-gradient(135deg,#0E7C7B 0%,#0a5c5b 100%);border:0;border-radius:13px;
+  cursor:pointer;font-family:inherit;transition:filter .15s}
+#ramGate button:hover{filter:brightness(1.09)}
+#ramGate button:active{filter:brightness(.95)}
+#ramGate .gmsg{min-height:20px;margin-top:12px;font-size:13px;font-weight:600;color:#D64545;line-height:1.5}
+#ramGate .gfoot{margin-top:14px;padding-top:14px;border-top:1px solid #E0E4E8;font-size:12.5px;color:#6B7280}
+</style>
+<div id="ramGate" role="dialog" aria-modal="true" aria-label="กรอกรหัสผ่านเพื่อเข้าสู่สนามแข่ง">
+  <div class="gcard">
+    <div class="glock"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10.4" width="16" height="10.6" rx="2.6"/><path d="M8 10.4V7.2a4 4 0 0 1 8 0v3.2"/></svg></div>
+    <h2>กรอกรหัสผ่านเพื่อเข้าสู่สนามแข่ง</h2>
+    <p class="gsub">กรอกรหัสนักศึกษา 10 หลัก (เช่น 69XXXXXXXX) หรือรหัสผ่านที่ได้รับจากผู้สอน เพื่อเข้าสู่ชุดเกมบทเรียน RAM1212</p>
+    <input id="ramGateIn" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="กรอกรหัสผ่าน" aria-label="รหัสผ่าน">
+    <button id="ramGateGo" type="button">เข้าสู่สนามแข่ง</button>
+    <div class="gmsg" id="ramGateMsg" role="status"></div>
+    <div class="gfoot">RAM1212 · ผู้ประกอบการรุ่นใหม่</div>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY='ram1212_gate', PASS='ru2569', SID=/^[0-9]{10}$/;
+  var el=document.getElementById('ramGate');
+  function remove(){ if(el && el.parentNode) el.parentNode.removeChild(el); }
+  function saved(){
+    try{ var v=JSON.parse(localStorage.getItem(KEY)||'null'); return (v && v.ok===true) ? v : null; }
+    catch(e){ return null; }
+  }
+  if(saved()){ remove(); return; }
+  document.documentElement.classList.add('ramgate-locked');
+  var inp=document.getElementById('ramGateIn'), msg=document.getElementById('ramGateMsg');
+  function pass(v){
+    try{ localStorage.setItem(KEY, JSON.stringify(v)); }catch(e){}
+    document.documentElement.classList.remove('ramgate-locked');
+    remove();
+    try{ window.dispatchEvent(new Event('resize')); }catch(e){}
+    try{ if(typeof window.ramGatePrefill==='function') window.ramGatePrefill(); }catch(e){}
+  }
+  function submit(){
+    var norm=(inp.value||'').trim().replace(/[\s-]/g,'');
+    if(norm.toLowerCase()===PASS){ pass({ok:true, mode:'pass', ts:Date.now()}); return; }
+    if(SID.test(norm)){ pass({ok:true, mode:'sid', sid:norm, ts:Date.now()}); return; }
+    inp.classList.add('bad');
+    msg.textContent = /^[0-9]+$/.test(norm)
+      ? 'รหัสนักศึกษาต้องเป็นตัวเลข 10 หลัก'
+      : 'รหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง';
+    setTimeout(function(){ inp.classList.remove('bad'); }, 1800);
+  }
+  document.getElementById('ramGateGo').addEventListener('click', submit);
+  inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); submit(); } });
+  inp.addEventListener('input', function(){ msg.textContent=''; });
+  setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 80);
+})();
+</script>
+
+<header>
+  <div class="wrap">
+    <div class="kicker">RAM1212 · ผู้ประกอบการรุ่นใหม่ · บทที่ 6</div>
+    <h1>ภารกิจชานมหน้ามอ — ครั้งที่ 1</h1>
+    <div class="sub">คิดแบบผู้ประกอบการ + เครื่องมือคู่ใจ</div>
+    <div class="hbar">
+      <span class="chip">ร้านของคุณ: <b id="hudTeam">ยังไม่ตั้งร้าน</b></span>
+      <span class="chip">คะแนน: <b id="hudPts">0</b></span>
+      <span class="chip">ตราประทับ: <b id="hudBadge">0/20</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav>
+    <button class="tab on">0 · ตั้งร้าน</button>
+    <button class="tab">1 · สุสานร้านดัง</button>
+    <button class="tab">2 · มืดบอด vs มีข้อมูล</button>
+    <button class="tab">3 · ข้อมูลห้องเรา</button>
+    <button class="tab">4 · จับเซลล์ให้ทัน</button>
+    <button class="tab">5 · เครื่องคิดเลขปริศนา</button>
+    <button class="tab">6 · ปิดคาบ</button>
+  </nav>
+
+  <!-- ========== 0 ตั้งร้าน ========== -->
+  <section class="panel on">
+    <div class="card">
+      <span class="tag slide">ก่อนเข้าคาบ 1 · 3 นาที</span>
+      <h2>ตั้งร้านของคุณ</h2>
+      <p class="lead">พิมพ์ชื่อจริงและรหัสนักศึกษา ระบบจะตั้งชื่อร้านและออกรหัสทีมให้ — <b>จดรหัสทีมไว้ ต้องใช้อีกครั้งในสัปดาห์หน้า</b></p>
+      <div class="grid2">
+        <div><label class="mini">ชื่อ–นามสกุล</label><input class="fld" id="inName" placeholder="เช่น สมชาย ใจดี"></div>
+        <div><label class="mini">รหัสนักศึกษา</label><input class="fld" id="inSid" placeholder="เช่น 6701234567" inputmode="numeric"></div>
+      </div>
+      <div class="ctrls">
+        <button class="btn" id="btnOpenShop">เปิดร้าน</button>
+        <button class="btn ghost" id="btnResetAll">ล้างข้อมูลเครื่องนี้</button>
+      </div>
+      <div id="shopCard"></div>
+      <div class="lesson">กติกาของทั้ง 2 สัปดาห์: ทุกสถานีที่เล่นจบ จะได้ <b>ตราประทับ</b> 1 ดวง ตราทั้งหมดมี 20 ดวง และตรงกับข้อสอบ 20 ข้อพอดี — สัปดาห์หน้าจะเฉลยว่าดวงไหนคือข้อไหน</div>
+    </div>
+    <div class="card">
+      <h3>อาจารย์ใช้ตรงไหนของสคริปต์</h3>
+      <div class="scroll"><table class="tb">
+        <tr><th>คาบ</th><th>นาที</th><th>สถานีในแล็บ</th><th>สไลด์</th></tr>
+        <tr><td>1</td><td>1–25</td><td>1 · สุสานร้านดัง</td><td>หน้า 1, 6–8</td></tr>
+        <tr><td>1</td><td>39–50</td><td>1 · ใบสั่งยา (ปัจจัยสำเร็จ)</td><td>หน้า 9–10</td></tr>
+        <tr><td>2</td><td>1–27</td><td>2 · มืดบอด vs มีข้อมูล + การ์ดประโยชน์</td><td>หน้า 11–23</td></tr>
+        <tr><td>2</td><td>28–38</td><td>2 · กระเป๋านักวิเคราะห์</td><td>หน้า 24–30</td></tr>
+        <tr><td>2</td><td>39–50</td><td>3 · มาตรวัดข้อมูลห้องเรา</td><td>หน้า 31–36</td></tr>
+        <tr><td>3</td><td>21–50</td><td>4 · จับเซลล์ให้ทัน</td><td>หน้า 45–50</td></tr>
+        <tr><td>4</td><td>1–30</td><td>5 · เครื่องคิดเลขปริศนา</td><td>หน้า 52–60</td></tr>
+        <tr><td>4</td><td>46–50</td><td>6 · หน้าจอล็อก Cliffhanger</td><td>—</td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- ========== 1 สุสานร้านดัง ========== -->
+  <section class="panel">
+    <div class="card">
+      <span class="tag exam">ออกสอบ ข้อ 1, 2</span>
+      <h2>สุสานร้านดัง</h2>
+      <p class="lead">ร้านเหล่านี้เคยแน่นทุกวัน วันนี้ปิดไปแล้ว — แตะป้ายหลุมศพเพื่ออ่านใบชันสูตร แล้วตัดสินว่า <b>ตายเพราะอะไร</b></p>
+      <div class="grid3" id="tombs"></div>
+      <div id="autopsy"></div>
+    </div>
+    <div class="card" id="voteCard">
+      <h3>ห้องนี้ตัดสินว่าอะไรคือฆาตกรตัวจริง</h3>
+      <p class="lead">กราฟรวมคำตอบของทุกคนในห้อง — อัปเดตทุกครั้งที่มีคนลงคะแนน</p>
+      <div id="voteChart"></div>
+      <div id="voteVerdict"></div>
+    </div>
+    <div class="card" id="rxCard">
+      <h3>ใบสั่งยา — ถ้าย้อนเวลาได้ จะกู้ร้านนี้ด้วยอะไร</h3>
+      <p class="lead">เลือกปัจจัยความสำเร็จที่คิดว่าจะช่วยร้านที่คุณเพิ่งชันสูตรได้มากที่สุด</p>
+      <div id="rxBox"></div>
+    </div>
+  </section>
+
+  <!-- ========== 2 วิจัยตลาด ========== -->
+  <section class="panel">
+    <div class="card">
+      <span class="tag exam">ออกสอบ ข้อ 3, 5, 13</span>
+      <h2>ร้านมืดบอด vs ร้านมีข้อมูล</h2>
+      <p class="lead">สองร้านเหมือนกันทุกอย่าง ต่างกันแค่ร้านขวายอมจ่ายค่าวิจัยตลาด กดเริ่มแล้วดู 12 สัปดาห์เดินไปพร้อมกัน</p>
+      <div class="ctrls">
+        <button class="btn" id="simStart">เริ่มเดินธุรกิจ 12 สัปดาห์</button>
+        <button class="btn ghost" id="simReset">เริ่มใหม่</button>
+        <span class="pill">สัปดาห์ที่ <b id="simWeek">0</b>/12</span>
+      </div>
+      <div class="grid2">
+        <div class="stat"><div class="k">ร้าน A · ตัดสินใจด้วยความรู้สึก</div><div class="v" id="simA">0 ฿</div><div class="mini" id="simAlog">ยังไม่เริ่ม</div></div>
+        <div class="stat"><div class="k">ร้าน B · ตัดสินใจด้วยข้อมูล</div><div class="v" id="simB">0 ฿</div><div class="mini" id="simBlog">ยังไม่เริ่ม</div></div>
+      </div>
+      <canvas id="simCv" height="220" style="width:100%;margin-top:13px;background:#fff;border:1px solid var(--border);border-radius:12px"></canvas>
+      <div id="simEnd"></div>
+    </div>
+
+    <div class="card">
+      <span class="tag exam">ออกสอบหนักสุด · ข้อ 14, 15, 16, 17</span>
+      <h2>เกมการ์ด — เคสไทยยุคนี้คู่กับประโยชน์ข้อไหน</h2>
+      <p class="lead">แตะเลือกการ์ดเคส 1 ใบ แล้วแตะประโยชน์ที่คิดว่าใช่ จับคู่ถูกการ์ดจะล็อกเข้าที่</p>
+      <div class="grid2">
+        <div><h3>เคสไทย</h3><div id="caseCol"></div></div>
+        <div><h3>ประโยชน์ของ Market Research</h3><div id="benCol"></div></div>
+      </div>
+      <div id="matchFb"></div>
+    </div>
+
+    <div class="card">
+      <span class="tag exam">ออกสอบ ข้อ 4</span>
+      <h2>จัดกระเป๋านักวิเคราะห์</h2>
+      <p class="lead">ลากของลงกระเป๋าไม่ได้ ใช้วิธีแตะเลย — แตะเครื่องมือที่นักวิจัยตลาดใช้จริง ระบบจะรับหรือดีดกลับทันที</p>
+      <div id="toolShelf" class="grid3"></div>
+      <div id="bagBox"></div>
+    </div>
+  </section>
+
+  <!-- ========== 3 ข้อมูลห้องเรา ========== -->
+  <section class="panel">
+    <div class="card">
+      <h2>มาตรวัดพลังข้อมูลของห้องเรา</h2>
+      <p class="lead">สแกน QR จากสไลด์หน้า 36 เพื่อตอบแบบสำรวจ แล้วกลับมาดูมาตรวัดนี้ — ทุกคำตอบที่เพิ่มเข้ามาคือพลังของสัปดาห์หน้า</p>
+      <div class="big" id="meterNum">0 คน</div>
+      <div class="bar" style="margin:10px 0 6px"><i id="meterBar" style="width:0%"></i></div>
+      <div id="meterMarks" class="grid3"></div>
+      <div class="ctrls">
+        <a class="btn" id="surveyLink" target="_blank" rel="noopener">เปิดแบบสำรวจ</a>
+        <button class="btn ghost" id="meterRefresh">รีเฟรชจำนวนผู้ตอบ</button>
+      </div>
+      <div id="meterNote" class="note"></div>
+      <div class="lesson">แบบสำรวจชุดนี้มีคำถามครบทั้ง 4 ประเภทที่เพิ่งเรียน: Single Answer · Multiple Answer · Rating Scale · Open Ended — ลองสังเกตตอนตอบว่าข้อไหนเป็นแบบไหน</div>
+    </div>
+    <div class="card">
+      <span class="tag exam">ออกสอบ ข้อ 13</span>
+      <h3>ทายก่อนไปต่อ: ข้อนี้เป็นคำถามประเภทไหน</h3>
+      <div id="qtypeBox"></div>
+    </div>
+  </section>
+
+  <!-- ========== 4 จับเซลล์ ========== -->
+  <section class="panel">
+    <div class="card">
+      <span class="tag exam">ออกสอบ ข้อ 6, 8, 9, 10</span>
+      <h2>จับเซลล์ให้ทัน</h2>
+      <p class="lead">ระบบขานตำแหน่ง แตะให้ถูกช่องก่อนหมดเวลา · แตะถูกติดกันได้ตัวคูณคอมโบ</p>
+      <div class="ctrls">
+        <button class="btn" id="gStart">เริ่มเกม 60 วินาที</button>
+        <select class="fld" id="gMode" style="max-width:210px">
+          <option value="find">โหมด A · ขานตำแหน่ง → แตะเซลล์</option>
+          <option value="name">โหมด B · เซลล์กะพริบ → พิมพ์ตำแหน่ง</option>
+        </select>
+      </div>
+      <div class="grid3" style="margin-bottom:10px">
+        <div class="stat"><div class="k">เป้าหมาย</div><div class="v" id="gTarget">—</div></div>
+        <div class="stat"><div class="k">คะแนน</div><div class="v" id="gScore">0</div></div>
+        <div class="stat"><div class="k">เวลา</div><div class="v" id="gTime">60</div></div>
+      </div>
+      <div id="gAnswerBox" class="hide" style="margin-bottom:10px"><input class="fld" id="gAnswer" placeholder="พิมพ์ตำแหน่งเซลล์ เช่น C5 แล้วกด Enter" autocomplete="off"></div>
+      <div class="scroll"><div id="gGrid"></div></div>
+      <div id="gFb"></div>
+      <div class="lesson">อ่านตำแหน่งเซลล์ให้เป็นนิสัย: <b>ตัวอักษรคือคอลัมน์ ตัวเลขคือแถว</b> — ดังนั้น C5 คือคอลัมน์ C แถวที่ 5 เสมอ</div>
+    </div>
+    <div class="card">
+      <h3>ทำไมต้อง Google Sheets ไม่ใช่ไฟล์ในเครื่อง</h3>
+      <div id="gsQuiz"></div>
+    </div>
+  </section>
+
+  <!-- ========== 5 เครื่องคิดเลขปริศนา ========== -->
+  <section class="panel">
+    <div class="card">
+      <span class="tag exam">ออกสอบ ข้อ 7, 11, 12</span>
+      <h2>เครื่องคิดเลขปริศนา</h2>
+      <p class="lead">นี่คือ Google Sheets จำลองที่คำนวณสูตรได้จริงในหน้านี้ ไม่ต้องล็อกอิน — ผ่านทีละด่าน ทุกด่านต้อง <b>ทายผลก่อน</b> แล้วจึงกดรัน</p>
+      <div id="puzzleNav" class="ctrls"></div>
+      <div id="puzzleBox"></div>
+    </div>
+  </section>
+
+  <!-- ========== 6 ปิดคาบ ========== -->
+  <section class="panel">
+    <div class="card">
+      <h2>สรุปตราประทับที่เก็บได้วันนี้</h2>
+      <p class="lead">ทุกดวงคือข้อสอบ 1 ข้อที่คุณตอบถูกไปแล้วโดยไม่รู้ตัว</p>
+      <div id="badgeGrid" class="grid3"></div>
+      <div class="lesson" id="badgeSum"></div>
+    </div>
+    <div class="card" style="background:linear-gradient(135deg,#10222b,#0b3b3a);color:#fff;border:none">
+      <h2 style="color:#fff">ห้องนี้มีคำตอบอยู่แล้ว แค่ยังไม่มีใครอ่านมันออก</h2>
+      <p class="lead" style="color:#cfe6e5">Dashboard ผลสำรวจของห้องเราถูกล็อกไว้ จะเปิดพร้อมกันในคาบหน้า</p>
+      <div id="lockBox"></div>
+      <div class="big" id="countdown" style="margin-top:12px">—</div>
+      <div class="mini" style="color:#9fc4c2" id="countdownLabel">นับถอยหลังถึงคาบหน้า</div>
+    </div>
+    <div class="card">
+      <h3>ก่อนกลับ · จดไว้ 2 อย่าง</h3>
+      <div id="carry"></div>
+    </div>
+  </section>
+
+  <footer>
+    RAM1212 ผู้ประกอบการรุ่นใหม่ · บทที่ 6 การทำวิจัยการตลาดด้วย Google Sheets<br>
+    ผศ.ดร.กุลวลัญช์ วรุณสิน · ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ มหาวิทยาลัยรามคำแหง
+  </footer>
+</div>
+<script>
+/* ============================================================
+   RAM1212 บทที่ 6 · Interactive Lab — แกนกลาง (Core)
+   ใช้ร่วมกันทั้งครั้งที่ 1 และครั้งที่ 2
+   ============================================================ */
+
+/* ---------- 1) ตัวช่วยพื้นฐาน ---------- */
+const $  = (s,r)=> (r||document).querySelector(s);
+const $$ = (s,r)=> Array.from((r||document).querySelectorAll(s));
+const el = (t,c,h)=>{const e=document.createElement(t); if(c)e.className=c; if(h!==undefined)e.innerHTML=h; return e;};
+const rnd = a => a[Math.floor(Math.random()*a.length)];
+const shuffle = a => {a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a;};
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fmt = n => (Math.round(n*100)/100).toLocaleString('th-TH');
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- 2) ที่เก็บข้อมูลในเครื่อง (ปลอดภัยเมื่อถูกปิดกั้น) ---------- */
+const Store = {
+  get(k,d){ try{ const v=localStorage.getItem('ram1212_'+k); return v===null?d:JSON.parse(v);}catch(e){return d;} },
+  set(k,v){ try{ localStorage.setItem('ram1212_'+k, JSON.stringify(v)); }catch(e){} },
+};
+
+/* ---------- 3) สะพานเชื่อม Google Sheets (Apps Script) ----------
+   ถ้ายังไม่ตั้งค่า CONFIG.sheetsWebAppUrl ระบบจะทำงานแบบออฟไลน์
+   โดยเก็บข้อมูลไว้ในเครื่องและรวมยอดจากข้อมูลจำลอง                      */
+const Cloud = {
+  get on(){ return typeof CONFIG!=='undefined' && !!(CONFIG.sheetsWebAppUrl && /^https:\/\//.test(CONFIG.sheetsWebAppUrl)); },
+  async send(action, payload){
+    const rec = Object.assign({action, ts:Date.now()}, payload);
+    const q = Store.get('queue',[]); q.push(rec); Store.set('queue', q.slice(-400));
+    if(!this.on) return {ok:false, offline:true};
+    try{
+      const r = await fetch(CONFIG.sheetsWebAppUrl, {
+        method:'POST', mode:'cors',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify(rec)
+      });
+      return await r.json();
+    }catch(e){ return {ok:false, error:String(e)}; }
+  },
+  async fetch(action, params){
+    if(!this.on) return {ok:false, offline:true};
+    try{
+      const u = new URL(CONFIG.sheetsWebAppUrl);
+      u.searchParams.set('action', action);
+      Object.entries(params||{}).forEach(([k,v])=>u.searchParams.set(k,v));
+      const r = await fetch(u.toString(), {method:'GET', mode:'cors'});
+      return await r.json();
+    }catch(e){ return {ok:false, error:String(e)}; }
+  },
+  /* รวมยอดโหวต: ถ้าต่อคลาวด์ได้ใช้ของจริง ถ้าไม่ได้ใช้ของในเครื่อง */
+  localTally(key){ return Store.get('tally_'+key, {}); },
+  bumpLocal(key, choice){
+    const t = this.localTally(key); t[choice]=(t[choice]||0)+1; Store.set('tally_'+key,t); return t;
+  }
+};
+
+/* ---------- 4) ระบบคะแนน + ตราประทับ 20 ดวง (= ข้อสอบ 20 ข้อ) ---------- */
+const EXAM = [
+  {n:1 , t:'ปัจจัยความสำเร็จของผู้ประกอบการ 7 ประการ'},
+  {n:2 , t:'สาเหตุความล้มเหลวที่สำคัญที่สุด = ไม่เข้าใจตลาดและลูกค้า'},
+  {n:3 , t:'ประโยชน์ของการทำ Market Research'},
+  {n:4 , t:'แอปพลิเคชันวิเคราะห์ข้อมูล (Word ไม่ใช่เครื่องมือวิเคราะห์)'},
+  {n:5 , t:'ความหมายของการวิจัยการตลาด'},
+  {n:6 , t:'Google Sheets เป็นบริการฟรีจาก Google'},
+  {n:7 , t:'นิยามของ Function'},
+  {n:8 , t:'ตำแหน่งเซลล์ C5 = คอลัมน์ C แถวที่ 5'},
+  {n:9 , t:'Google Sheets ทำงานพร้อมกันได้หลายคน'},
+  {n:10, t:'ผู้ใช้ไม่จำกัดเฉพาะเจ้าของไฟล์'},
+  {n:11, t:'AVERAGE ละเว้นเซลล์ที่เป็นข้อความ'},
+  {n:12, t:'SUM(1..10) = 55'},
+  {n:13, t:'ประเภทของการวิจัยการตลาด'},
+  {n:14, t:'เคสรองเท้าสีดำ → ตัดสินใจรวดเร็วและแม่นยำ'},
+  {n:15, t:'เคส E-Wallet → เกิดสินค้าและบริการใหม่'},
+  {n:16, t:'การจัดกลุ่มลูกค้า → เข้าใจตลาดมากขึ้น'},
+  {n:17, t:'ประโยชน์ทั้ง 4 ข้อ = ถูกทุกข้อ'},
+  {n:18, t:'CHOOSE(MONTH("2022-10-11"),...) = OCT'},
+  {n:19, t:'IF(B2>35) เมื่อ B2 = 35 พอดี → Fail'},
+  {n:20, t:'IF(B2>=35) เมื่อ B2 = 35 พอดี → Pass'},
+];
+const Score = {
+  get st(){ return Store.get('score', {pts:0, badges:[], team:null, name:'', sid:'', shop:''}); },
+  save(s){ Store.set('score', s); this.paint(); },
+  add(p, badge){
+    const s=this.st; s.pts+=p;
+    if(badge){ [].concat(badge).forEach(b=>{ if(!s.badges.includes(b)) s.badges.push(b); }); }
+    this.save(s);
+    if(p>0) this.toast('+'+p+' คะแนน' + (badge? ' · ได้ตราประทับข้อ '+[].concat(badge).join(', ') : ''));
+    if(badge) Cloud.send('badge', {team:s.team, sid:s.sid, badges:[].concat(badge).join(',')});
+  },
+  paint(){
+    const s=this.st;
+    const p=$('#hudPts'), b=$('#hudBadge'), t=$('#hudTeam');
+    if(p) p.textContent = s.pts;
+    if(b) b.textContent = s.badges.length + '/20';
+    if(t) t.textContent = s.team ? (s.shop||'ทีม')+' · '+s.team : 'ยังไม่ตั้งร้าน';
+  },
+  toast(msg){
+    let w=$('#toastWrap'); if(!w){ w=el('div','',''); w.id='toastWrap';
+      w.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:99;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none';
+      document.body.appendChild(w); }
+    const t=el('div','pop', esc(msg));
+    t.style.cssText='background:#1B2026;color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,.22)';
+    w.appendChild(t); setTimeout(()=>{t.style.transition='opacity .4s';t.style.opacity='0';setTimeout(()=>t.remove(),400);},1900);
+  }
+};
+
+/* ---------- 5) เครื่องคำนวณสูตรจำลอง Google Sheets ----------
+   รองรับ: + - * / & เปรียบเทียบ, ช่วงเซลล์ A1:B9, ฟังก์ชันหลักของบทที่ 6
+   TRUE = 1, FALSE = 0 เมื่อนำไปคำนวณ (ตรงตามสไลด์)                     */
+const Formula = (()=>{
+  const A2N = s => { let n=0; for(const c of s.toUpperCase()) n = n*26 + (c.charCodeAt(0)-64); return n; };
+  const N2A = n => { let s=''; while(n>0){ const r=(n-1)%26; s=String.fromCharCode(65+r)+s; n=Math.floor((n-1)/26);} return s; };
+
+  function tokenize(src){
+    const T=[]; let i=0;
+    const isD=c=>/[0-9]/.test(c), isA=c=>/[A-Za-z_$]/.test(c);
+    while(i<src.length){
+      const c=src[i];
+      if(/\s/.test(c)){i++;continue;}
+      if(c==='"'){ let j=i+1,s=''; while(j<src.length){ if(src[j]==='"'){ if(src[j+1]==='"'){s+='"';j+=2;continue;} break;} s+=src[j++]; } T.push({t:'str',v:s}); i=j+1; continue; }
+      if(isD(c) || (c==='.'&&isD(src[i+1]))){ let j=i; while(j<src.length&&/[0-9.]/.test(src[j]))j++; T.push({t:'num',v:parseFloat(src.slice(i,j))}); i=j; continue; }
+      if(isA(c)){ let j=i; while(j<src.length&&/[A-Za-z0-9_$.]/.test(src[j]))j++;
+        const w=src.slice(i,j); i=j;
+        if(src[i]==='(') { T.push({t:'fn',v:w.toUpperCase()}); }
+        else if(/^\$?[A-Za-z]{1,2}\$?[0-9]{1,4}$/.test(w)) T.push({t:'ref',v:w.replace(/\$/g,'').toUpperCase()});
+        else T.push({t:'name',v:w.toUpperCase()});
+        continue; }
+      if('()+-*/^&,:'.includes(c)){ T.push({t:c}); i++; continue; }
+      if('<>='.includes(c)){ let op=c; i++; if('<>='.includes(src[i]||'')){ op+=src[i]; i++; } T.push({t:'op',v:op}); continue; }
+      throw new Error('อักขระไม่ถูกต้อง: '+c);
+    }
+    return T;
+  }
+
+  function parse(T){
+    let p=0;
+    const peek=()=>T[p], eat=t=>{ if(T[p]&&(T[p].t===t)) return T[p++]; return null; };
+    function expr(){ let n=concat();
+      while(peek()&&peek().t==='op'){ const op=T[p++].v; n={k:'bin',op,a:n,b:concat()}; }
+      return n; }
+    function concat(){ let n=add(); while(peek()&&peek().t==='&'){ p++; n={k:'bin',op:'&',a:n,b:add()}; } return n; }
+    function add(){ let n=mul(); while(peek()&&(peek().t==='+'||peek().t==='-')){ const o=T[p++].t; n={k:'bin',op:o,a:n,b:mul()}; } return n; }
+    function mul(){ let n=un(); while(peek()&&(peek().t==='*'||peek().t==='/')){ const o=T[p++].t; n={k:'bin',op:o,a:n,b:un()}; } return n; }
+    function un(){ if(peek()&&peek().t==='-'){ p++; return {k:'neg',a:un()}; } if(peek()&&peek().t==='+'){p++; return un();} return prim(); }
+    function prim(){
+      const t=peek(); if(!t) throw new Error('สูตรไม่สมบูรณ์');
+      if(t.t==='num'){p++; return {k:'num',v:t.v};}
+      if(t.t==='str'){p++; return {k:'str',v:t.v};}
+      if(t.t==='name'){p++; if(t.v==='TRUE')return{k:'bool',v:true}; if(t.v==='FALSE')return{k:'bool',v:false}; throw new Error('ไม่รู้จัก '+t.v);}
+      if(t.t==='fn'){ p++; if(!eat('(')) throw new Error('ต้องมี ( หลัง '+t.v);
+        const args=[]; if(peek()&&peek().t!==')'){ args.push(expr()); while(eat(',')) args.push(expr()); }
+        if(!eat(')')) throw new Error('วงเล็บไม่ครบใน '+t.v);
+        return {k:'call',fn:t.v,args}; }
+      if(t.t==='ref'){ p++; if(peek()&&peek().t===':'){ p++; const b=T[p++]; if(!b||b.t!=='ref') throw new Error('ช่วงเซลล์ไม่ถูกต้อง');
+          return {k:'range',a:t.v,b:b.v}; } return {k:'ref',v:t.v}; }
+      if(t.t==='('){ p++; const n=expr(); if(!eat(')')) throw new Error('วงเล็บไม่ครบ'); return n; }
+      throw new Error('สูตรไม่ถูกต้องใกล้ตำแหน่ง '+p);
+    }
+    const n=expr(); if(p<T.length) throw new Error('มีส่วนเกินในสูตร'); return n;
+  }
+
+  const num = v => { if(v===null||v===undefined||v==='')return 0; if(typeof v==='boolean')return v?1:0;
+    if(typeof v==='number')return v; const f=parseFloat(String(v).replace(/,/g,'')); return isNaN(f)?NaN:f; };
+  const isNum = v => typeof v==='number' || (typeof v==='boolean') || (typeof v==='string' && v.trim()!=='' && !isNaN(parseFloat(v)) && isFinite(v));
+  const str = v => v===null||v===undefined?'':(typeof v==='boolean'?(v?'TRUE':'FALSE'):String(v));
+
+  function cmp(a,b,op){
+    let x=a,y=b;
+    if(isNum(a)&&isNum(b)){ x=num(a); y=num(b); } else { x=str(a).toLowerCase(); y=str(b).toLowerCase(); }
+    switch(op){ case '=':return x===y; case '<>':return x!==y; case '>':return x>y; case '<':return x<y;
+      case '>=':return x>=y; case '<=':return x<=y; } return false;
+  }
+  function matchCrit(v, crit){
+    const c = str(crit).trim();
+    const m = c.match(/^(>=|<=|<>|>|<|=)(.*)$/);
+    if(m){ const rhs = isNum(m[2])?num(m[2]):m[2]; return cmp(v, rhs, m[1]); }
+    if(/[*?]/.test(c)){ const re=new RegExp('^'+c.replace(/[.+^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*').replace(/\?/g,'.')+'$','i');
+      return re.test(str(v)); }
+    if(isNum(c)) return num(v)===num(c);
+    return str(v).trim().toLowerCase()===c.toLowerCase();
+  }
+  function toDate(v){
+    if(v instanceof Date) return v;
+    const s=str(v).trim();
+    let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/); if(m) return new Date(+m[1],+m[2]-1,+m[3]);
+    m=s.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/); if(m) return new Date(+m[3],+m[2]-1,+m[1]);
+    const d=new Date(s); if(!isNaN(d)) return d;
+    throw new Error('รูปแบบวันที่ไม่ถูกต้อง: '+s);
+  }
+
+  const FN = {
+    SUM:  a=>flat(a).filter(isNum).reduce((s,v)=>s+num(v),0),
+    AVERAGE:a=>{const x=flat(a).filter(isNum).map(num); if(!x.length) throw new Error('#DIV/0!'); return x.reduce((s,v)=>s+v,0)/x.length;},
+    COUNT:a=>flat(a).filter(isNum).length,
+    COUNTA:a=>flat(a).filter(v=>v!==''&&v!==null&&v!==undefined).length,
+    MAX:a=>Math.max(...flat(a).filter(isNum).map(num)),
+    MIN:a=>Math.min(...flat(a).filter(isNum).map(num)),
+    ROUND:a=>{const d=a[1]===undefined?0:num(sc(a[1])); const f=Math.pow(10,d); return Math.round(num(sc(a[0]))*f)/f;},
+    ABS:a=>Math.abs(num(sc(a[0]))),
+    COUNTIF:a=>{const r=arr(a[0]), c=sc(a[1]); return r.filter(v=>matchCrit(v,c)).length;},
+    SUMIF:a=>{const r=arr(a[0]), c=sc(a[1]), s=a[2]!==undefined?arr(a[2]):r;
+      return r.reduce((t,v,i)=> matchCrit(v,c)&&isNum(s[i]) ? t+num(s[i]) : t, 0);},
+    AVERAGEIF:a=>{const r=arr(a[0]), c=sc(a[1]), s=a[2]!==undefined?arr(a[2]):r;
+      const hit=r.map((v,i)=>matchCrit(v,c)?s[i]:null).filter(v=>v!==null&&isNum(v)).map(num);
+      if(!hit.length) throw new Error('#DIV/0!'); return hit.reduce((x,y)=>x+y,0)/hit.length;},
+    IF:a=>{ const c=sc(a[0]); const ok = (typeof c==='boolean')?c:(isNum(c)?num(c)!==0:str(c).toUpperCase()==='TRUE');
+      return ok ? (a[1]===undefined?true:sc(a[1])) : (a[2]===undefined?false:sc(a[2])); },
+    IFERROR:a=>a[0],
+    AND:a=>flat(a).every(v=> typeof v==='boolean'? v : num(v)!==0),
+    OR:a=>flat(a).some(v=> typeof v==='boolean'? v : num(v)!==0),
+    NOT:a=>!(typeof sc(a[0])==='boolean'? sc(a[0]) : num(sc(a[0]))!==0),
+    CHOOSE:a=>{const i=Math.trunc(num(sc(a[0]))); if(i<1||i>a.length-1) throw new Error('#VALUE! ดัชนีเกินรายการ'); return sc(a[i]);},
+    MONTH:a=>toDate(sc(a[0])).getMonth()+1,
+    YEAR:a=>toDate(sc(a[0])).getFullYear(),
+    DAY:a=>toDate(sc(a[0])).getDate(),
+    LEN:a=>str(sc(a[0])).length,
+    TRIM:a=>str(sc(a[0])).replace(/\s+/g,' ').trim(),
+    UPPER:a=>str(sc(a[0])).toUpperCase(),
+    LOWER:a=>str(sc(a[0])).toLowerCase(),
+    CONCATENATE:a=>flat(a).map(str).join(''),
+    REGEXMATCH:a=>{ try{ return new RegExp(str(sc(a[1])),'i').test(str(sc(a[0]))); }catch(e){ throw new Error('รูปแบบ Regex ไม่ถูกต้อง'); } },
+    REGEXEXTRACT:a=>{ const m=str(sc(a[0])).match(new RegExp(str(sc(a[1])),'i')); if(!m) throw new Error('#N/A'); return m[1]!==undefined?m[1]:m[0]; },
+  };
+  function flat(a){ const o=[]; a.forEach(v=> Array.isArray(v)? o.push(...v) : o.push(v)); return o; }
+  function arr(v){ return Array.isArray(v)? v : [v]; }
+  function sc(v){ return Array.isArray(v)? v[0] : v; }
+
+  function evalNode(n, ctx){
+    switch(n.k){
+      case 'num': return n.v;
+      case 'str': return n.v;
+      case 'bool': return n.v;
+      case 'neg': return -num(evalNode(n.a,ctx));
+      case 'ref': return ctx.get(n.v);
+      case 'range': {
+        const ca=A2N(n.a.match(/[A-Z]+/)[0]), ra=+n.a.match(/\d+/)[0];
+        const cb=A2N(n.b.match(/[A-Z]+/)[0]), rb=+n.b.match(/\d+/)[0];
+        const out=[];
+        for(let r=Math.min(ra,rb); r<=Math.max(ra,rb); r++)
+          for(let c=Math.min(ca,cb); c<=Math.max(ca,cb); c++) out.push(ctx.get(N2A(c)+r));
+        return out;
+      }
+      case 'call': {
+        const f=FN[n.fn]; if(!f) throw new Error('ยังไม่รองรับฟังก์ชัน '+n.fn+'()');
+        if(n.fn==='IF'||n.fn==='CHOOSE'||n.fn==='IFERROR'){
+          if(n.fn==='IFERROR'){ try{ return FN.IFERROR([evalNode(n.args[0],ctx)]); }catch(e){ return n.args[1]?evalNode(n.args[1],ctx):''; } }
+          if(n.fn==='IF'){ const c=evalNode(n.args[0],ctx);
+            const ok=(typeof c==='boolean')?c:(isNum(c)?num(c)!==0:str(c).toUpperCase()==='TRUE');
+            return ok ? (n.args[1]?evalNode(n.args[1],ctx):true) : (n.args[2]?evalNode(n.args[2],ctx):false); }
+          const i=Math.trunc(num(evalNode(n.args[0],ctx)));
+          if(i<1||i>n.args.length-1) throw new Error('#VALUE! ดัชนีเกินรายการตัวเลือก');
+          return evalNode(n.args[i],ctx);
+        }
+        return f(n.args.map(a=>evalNode(a,ctx)));
+      }
+      case 'bin': {
+        const a=evalNode(n.a,ctx), b=evalNode(n.b,ctx);
+        if(n.op==='&') return str(sc(a))+str(sc(b));
+        if(['=','<>','>','<','>=','<='].includes(n.op)) return cmp(sc(a),sc(b),n.op);
+        const x=num(sc(a)), y=num(sc(b));
+        if(isNaN(x)||isNaN(y)) throw new Error('#VALUE! ใช้ตัวเลขคำนวณกับข้อความไม่ได้');
+        switch(n.op){ case '+':return x+y; case '-':return x-y; case '*':return x*y;
+          case '/': if(y===0) throw new Error('#DIV/0!'); return x/y; }
+      }
+    }
+    throw new Error('สูตรไม่ถูกต้อง');
+  }
+
+  /* ทำความสะอาดสูตรก่อนอ่าน: ตัดช่องว่างหัวท้าย และแปลงเครื่องหมายคำพูดโค้ง (ที่คีย์บอร์ดมือถือ/แท็บเล็ตมักแทรกให้อัตโนมัติ) ให้เป็นเครื่องหมายคำพูดตรง */
+  function cleanFormula(raw){
+    if(typeof raw!=='string') return raw;
+    return raw.trim().replace(/[“”„″]/g,'"').replace(/[‘’′]/g,"'");
+  }
+  /* evaluate("=SUM(A1:A3)", addr=>value) */
+  function evaluate(raw, getter, depth){
+    depth = depth||0;
+    if(depth>12) throw new Error('อ้างอิงวนซ้ำ');
+    if(typeof raw!=='string') return raw;
+    const cleaned = cleanFormula(raw);
+    if(cleaned[0]!=='=') return raw;
+    const ctx = { get(addr){ const v=getter(addr); return (typeof v==='string'&&cleanFormula(v)[0]==='=') ? evaluate(v,getter,depth+1) : (v===undefined?'':v); } };
+    return evalNode(parse(tokenize(cleaned.slice(1))), ctx);
+  }
+  return {evaluate, A2N, N2A, num, str, isNum};
+})();
+
+/* ---------- 6) ตารางจำลอง Google Sheets (MiniSheet) ---------- */
+function MiniSheet(mount, opts){
+  opts = opts||{};
+  const rows = opts.rows||8, cols = opts.cols||5;
+  const data = Object.assign({}, opts.data||{});
+  const locked = new Set(opts.locked||[]);
+  const host = typeof mount==='string' ? $(mount) : mount;
+  host.innerHTML='';
+  const bar = el('div','', '');
+  bar.style.cssText='display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:wrap';
+  const addr = el('span','pill','A1'); addr.style.minWidth='54px';
+  const inp = el('input','fld'); inp.placeholder='พิมพ์ค่า หรือสูตรขึ้นต้นด้วย =';
+  inp.style.flex='1 1 200px'; inp.setAttribute('inputmode','text'); inp.setAttribute('autocapitalize','off'); inp.spellcheck=false;
+  bar.append(addr, inp); host.appendChild(bar);
+
+  const wrapT = el('div','scroll'); const tb = el('table','tb'); wrapT.appendChild(tb); host.appendChild(wrapT);
+  const out = el('div','mini'); out.style.marginTop='7px'; host.appendChild(out);
+
+  let cur = opts.start||'A1';
+  const get = a => data[a]===undefined? '' : data[a];
+  function shown(a){
+    const raw = get(a); if(raw==='') return '';
+    const cleaned = typeof raw==='string' ? raw.trim() : raw;
+    if(typeof cleaned==='string' && cleaned[0]==='='){
+      try{ const v=Formula.evaluate(cleaned, get); return typeof v==='boolean'? (v?'TRUE':'FALSE') : (typeof v==='number'? fmt(v) : v); }
+      catch(e){ return '⚠ '+e.message.replace('#',''); }
+    }
+    return raw;
+  }
+  function paint(){
+    tb.innerHTML='';
+    const hr = el('tr'); hr.appendChild(el('th','', ''));
+    for(let c=1;c<=cols;c++) hr.appendChild(el('th','',Formula.N2A(c)));
+    tb.appendChild(hr);
+    for(let r=1;r<=rows;r++){
+      const tr=el('tr'); const th=el('th','',String(r)); th.style.width='34px'; tr.appendChild(th);
+      for(let c=1;c<=cols;c++){
+        const a=Formula.N2A(c)+r;
+        const td=el('td','', esc(shown(a)));
+        td.style.cursor='pointer'; td.style.minWidth='72px'; td.dataset.a=a;
+        if(locked.has(a)) td.style.background='#FAFAFB';
+        if(a===cur){ td.style.outline='2px solid var(--teal)'; td.style.outlineOffset='-2px'; }
+        const v = shown(a);
+        if(typeof v==='string' && v.startsWith('⚠')) td.style.color='var(--red)';
+        td.onclick=()=>{ cur=a; addr.textContent=a; inp.value = get(a); paint(); inp.focus(); };
+        tr.appendChild(td);
+      }
+      tb.appendChild(tr);
+    }
+    if(opts.onPaint) opts.onPaint(api);
+  }
+  function commit(){
+    if(locked.has(cur)){ out.textContent='เซลล์นี้ถูกล็อกไว้ ลองเซลล์อื่นครับ'; return; }
+    let v = inp.value.trim();
+    if(v!=='' && v[0]!=='=' && !isNaN(parseFloat(v)) && isFinite(v)) v = parseFloat(v);
+    data[cur]=v; out.textContent='';
+    if(typeof v==='string' && v[0]==='='){
+      try{ const r=Formula.evaluate(v,get); out.innerHTML='ผลลัพธ์ของ '+cur+' คือ <b>'+esc(typeof r==='boolean'?(r?'TRUE':'FALSE'):(typeof r==='number'?fmt(r):r))+'</b>'; }
+      catch(e){ out.innerHTML='<span style="color:var(--red)">สูตรมีปัญหา: '+esc(e.message)+'</span>'; }
+    }
+    paint(); if(opts.onChange) opts.onChange(api);
+  }
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); commit(); } });
+  inp.addEventListener('blur', ()=>{ if(inp.value!==String(get(cur))) commit(); });
+
+  const api = {
+    data, get, shown, paint, refresh:paint,
+    value(a){ try{ return Formula.evaluate(get(a), get); }catch(e){ return null; } },
+    set(a,v){ data[a]=v; paint(); },
+    select(a){ cur=a; addr.textContent=a; inp.value=get(a); paint(); }
+  };
+  api.select(cur); paint();
+  return api;
+}
+
+/* ---------- 7) ระบบแท็บ ---------- */
+function initTabs(){
+  const tabs=$$('.tab'), panels=$$('.panel');
+  tabs.forEach((t,i)=> t.onclick=()=>{
+    tabs.forEach(x=>x.classList.remove('on')); panels.forEach(x=>x.classList.remove('on'));
+    t.classList.add('on'); if(panels[i]) panels[i].classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+    Store.set('lastTab', i);
+  });
+}
+</script>
+<script>
+/* ============================================================
+   ตั้งค่าที่อาจารย์แก้ได้ — แก้เฉพาะในบล็อก CONFIG นี้เท่านั้น
+   ============================================================ */
+const CONFIG = {
+  /* วาง URL ของ Apps Script Web App (ลงท้ายด้วย /exec) ถ้าเว้นว่าง แล็บจะทำงานแบบออฟไลน์ */
+  sheetsWebAppUrl: '',
+  /* ลิงก์แบบสำรวจชานมไข่มุกของห้อง (สไลด์หน้า 36) */
+  surveyUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSdVMhRT9OHW2bs-yy2gRum2Q4QlkDdxD1Zi0wkMWTMBANqqZw/viewform',
+  classSize: 10,
+  unlock: [3, 6, 10],
+  revealAt: '2026-09-21T09:00:00+07:00',
+
+  /* ตรงตามสไลด์หน้า 7 (ปัจจัยความสำเร็จ) และหน้า 8 (สาเหตุความล้มเหลว) */
+  SUCCESS7: [
+    'มีวิสัยทัศน์ และความคิดสร้างสรรค์ของผู้ประกอบการ',
+    'มีความสามารถในด้านการตลาดและการกระจายสินค้า',
+    'มีคุณลักษณะของผลิตภัณฑ์หรือบริการที่เป็นเอกลักษณ์',
+    'มีประสบการณ์ ทักษะ และความชำนาญทางธุรกิจที่สามารถปรับตัวต่อการเปลี่ยนแปลงทางการตลาดได้อย่างเหมาะสมและทันท่วงที',
+    'มีความพร้อมเรื่องเงินลงทุน',
+    'มีเครือข่ายธุรกิจที่ช่วยสนับสนุนในการทำธุรกิจ',
+    'มีการกำหนดแผนงานและเป้าหมายในการทำธุรกิจที่ชัดเจน'
+  ],
+  FAIL7: [
+    'ไม่เข้าใจตลาดและลูกค้า',
+    'ผู้ประกอบการมีประสบการณ์น้อย',
+    'ปัญหาการขาดทุน หรือมีรายจ่ายมากกว่ารายรับ',
+    'เกิดสงครามราคาในผลิตภัณฑ์ที่ผลิตทำให้มีภาวการณ์แข่งขันด้านราคาสูง',
+    'ผลิตภัณฑ์และบริการไม่มีความแตกต่าง',
+    'ปัญหาขาดแคลนเงินทุนหมุนเวียน',
+    'บุคลากรขาดทักษะ และประสบการณ์'
+  ]
+};
+
+/* ============================================================
+   ความปลอดภัย: ไม่ฝัง URL ของ Google Apps Script ไว้ในซอร์สโค้ดสาธารณะ
+   - อาจารย์แจกลิงก์จริงให้นักศึกษาแบบผูก URL fragment เช่น
+     .../week1.html#wa=<URL ที่เข้ารหัสด้วย encodeURIComponent>
+   - ค่าใน URL fragment (ส่วนหลัง #) จะไม่ถูกส่งไปเซิร์ฟเวอร์ใด ๆ เลย
+     (ไม่ติด server log, ไม่ติด Referer header, บอทพรีวิวลิงก์ก็มองไม่เห็น)
+     จึงปลอดภัยกว่าการฝังไว้ใน query string (?wa=...) หรือในซอร์สโค้ด
+   - ทดสอบบนเครื่องอาจารย์เอง: เปิด Console (F12) แล้วรันคำสั่ง
+     localStorage.setItem('sheetsWebAppUrl','https://script.google.com/.../exec')
+   ============================================================ */
+(function(){
+  var url = (typeof window.ramWaUrl === 'function') ? window.ramWaUrl() : '';
+  if(url) CONFIG.sheetsWebAppUrl = url;
+})();
+
+
+/* ============================================================
+   สถานี 0 · ตั้งร้าน
+   ============================================================ */
+const SHOP_A = ['ชานม','ไข่มุก','บราวน์ชูการ์','ชาไทย','โอริโอ้','มัทฉะ','ครีมชีส','คาราเมล'];
+const SHOP_B = ['พี่หมี','ลุงหนวด','ป้าแดง','น้องแมว','เฮียโอ๋','คุณครู','เจ๊ม้อย','พี่บอย'];
+const SHOP_C = ['สาขาราม','หน้ามอ','ซอย 8','ตลาดนัด','ชั้น 1 คณะวิศวฯ','หลังหอ'];
+
+function makeCode(sid){
+  let h=0; const s=(sid||'')+'|'+Date.now();
+  for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; }
+  const AB='ACDEFGHJKLMNPQRTUVWXY3479';
+  let out=''; for(let i=0;i<6;i++){ out+=AB[h%AB.length]; h=Math.floor(h/AB.length)+7919; }
+  return out;
+}
+function paintShop(){
+  const s=Score.st;
+  const box=$('#shopCard'); if(!box) return;
+  if(!s.team){ box.innerHTML=''; return; }
+  box.innerHTML =
+    '<div class="card pop" style="background:var(--light);border-color:var(--teal);margin-top:6px">'+
+    '<div class="mini">ร้านของ '+esc(s.name)+' · '+esc(s.sid)+'</div>'+
+    '<div class="big" style="color:var(--teal-d)">'+esc(s.shop)+'</div>'+
+    '<div style="margin-top:8px">รหัสทีม <b style="font-size:22px;letter-spacing:.18em">'+esc(s.team)+'</b></div>'+
+    '<div class="mini" style="margin-top:6px">ถ่ายรูปหน้าจอนี้เก็บไว้ · สัปดาห์หน้าต้องใช้รหัสนี้เพื่อดึงคะแนนสะสมกลับมา</div></div>';
+}
+$('#btnOpenShop').onclick = ()=>{
+  const n=$('#inName').value.trim(), sid=$('#inSid').value.trim();
+  if(n.length<3 || sid.length<4){ Score.toast('กรอกชื่อและรหัสนักศึกษาให้ครบก่อนครับ'); return; }
+  const s=Score.st;
+  s.name=n; s.sid=sid; s.shop=rnd(SHOP_A)+' '+rnd(SHOP_B)+' '+rnd(SHOP_C); s.team=makeCode(sid);
+  Score.save(s); paintShop(); Score.add(5);
+  Cloud.send('register', {team:s.team, sid:s.sid, name:s.name, shop:s.shop});
+};
+$('#btnResetAll').onclick = ()=>{ if(confirm('ล้างคะแนนและตราประทับทั้งหมดในเครื่องนี้?')){ ['score','queue'].forEach(k=>Store.set(k,null)); location.reload(); } };
+
+/* ============================================================
+   สถานี 1 · สุสานร้านดัง
+   ============================================================ */
+const TOMBS = [
+  {id:'t1', name:'ชานมหวานเวอร์', life:'เปิด 14 เดือน', kind:'ร้านชานมหน้ามหาวิทยาลัย',
+   clues:['เมนูมีแต่สูตรหวานจัด ไม่มีตัวเลือกหวานน้อย','รีวิว 43 รายการ มี 31 รายการพูดคำว่า “หวานเกิน”','ร้านคู่แข่งฝั่งตรงข้ามมีระดับความหวาน 5 ระดับ'],
+   sales:[100,96,88,74,61,50,44,39,33,26,19,11], ans:0,
+   why:'เจ้าของชิมเองแล้วชอบ จึงคิดว่าลูกค้าต้องชอบด้วย — ไม่เคยถามลูกค้าสักครั้งว่าอยากได้ความหวานระดับไหน'},
+  {id:'t2', name:'ปิ้งย่างบุฟเฟต์ 199', life:'เปิด 8 เดือน', kind:'บุฟเฟต์ปิ้งย่าง',
+   clues:['คิวยาวทุกเย็น ที่นั่งเต็ม 100%','ต้นทุนวัตถุดิบเฉลี่ยต่อหัว 214 บาท ขาย 199 บาท','ไม่เคยทำบัญชีต้นทุนต่อหัวเลยตลอด 8 เดือน'],
+   sales:[100,104,108,103,99,92,85,72,60,48,30,14], ans:2,
+   why:'ขายดีแต่ขาดทุนทุกจาน ยิ่งลูกค้าเยอะยิ่งเจ๊งเร็ว เพราะไม่เคยคำนวณต้นทุนต่อหัวเทียบราคาขาย'},
+  {id:'t3', name:'คาเฟ่สายมูเช็คอิน', life:'เปิด 5 เดือน', kind:'คาเฟ่ถ่ายรูป',
+   clues:['เดือนแรกคนล้น เพราะกระแสในโซเชียล','ลูกค้าซ้ำมีเพียง 6%','ไม่เคยเก็บข้อมูลว่าลูกค้ามาจากไหน มาทำไม จะกลับมาไหม'],
+   sales:[100,120,86,52,38,27,22,18,15,12,9,6], ans:0,
+   why:'เข้าใจผิดว่า “คนเยอะ” คือ “ตลาดของเรา” ทั้งที่คนเหล่านั้นมาเพราะกระแส ไม่ใช่เพราะสินค้า และไม่เคยหาข้อมูลว่ากลุ่มลูกค้าจริงคือใคร'},
+  {id:'t4', name:'ดีวีดีเช่า 24 ชั่วโมง', life:'เปิด 11 ปี', kind:'ร้านเช่าแผ่นหนัง',
+   clues:['ยอดขายนิ่งมา 6 ปีแล้วดิ่งใน 2 ปีหลัง','เจ้าของอายุมากไม่กล้าแตะระบบสั่งออนไลน์ ปฏิเสธข้อเสนอถึง 3 ครั้ง','ไม่มีพนักงานสักคนในร้านที่ใช้แอปหรือระบบดิจิทัลเป็น'],
+   sales:[100,98,95,90,80,66,52,40,29,20,12,5], ans:6,
+   why:'ทั้งเจ้าของและพนักงานไม่มีทักษะด้านดิจิทัลเลยสักคน จึงปรับตัวตามพฤติกรรมลูกค้าที่ย้ายไปสตรีมมิงไม่ทัน'},
+  {id:'t5', name:'ตามสั่งซอยตัน', life:'เปิด 7 เดือน', kind:'ร้านอาหารตามสั่ง',
+   clues:['เมนูและราคาเหมือนร้านตามสั่งทั่วไปทุกร้าน ไม่มีเมนูซิกเนเจอร์','ไม่เคยคิดเมนูหรือจุดขายที่ต่างจากร้านข้างเคียง','ลูกค้าบอกเป็นเสียงเดียวกันว่า "ที่ไหนก็ได้ รสชาติเหมือนกันหมด"'],
+   sales:[100,92,85,77,70,62,54,45,36,28,20,13], ans:4,
+   why:'อาหารรสชาติดี แต่ไม่มีอะไรต่างจากร้านตามสั่งร้านอื่นเลยแม้แต่ข้อเดียว ลูกค้าจึงไม่มีเหตุผลต้องเลือกร้านนี้เป็นพิเศษ'},
+  {id:'t6', name:'ขนมโฮมเมดพี่หนู', life:'เปิด 9 เดือน', kind:'ขนมสั่งทำออนไลน์',
+   clues:['ออร์เดอร์เพิ่มจาก 20 เป็น 400 กล่องต่อเดือนใน 3 เดือน','ต้องซื้อวัตถุดิบเพิ่มทันที แต่เงินจากลูกค้าเก็บปลายทางเข้าช้ากว่าครึ่งเดือน','หมุนเงินไม่ทัน ต้องเลื่อนจ่ายค่าวัตถุดิบจนร้านค้าส่งไม่ยอมส่งของให้เชื่อแล้ว'],
+   sales:[100,140,190,160,120,95,74,58,42,30,20,12], ans:5,
+   why:'ยอดขายโตเร็วมากจนกลายเป็นกับดัก — ออร์เดอร์ล้นแต่เงินสดหมุนไม่ทันเพราะรายรับเข้าช้ากว่ารายจ่าย สุดท้ายส่งของช้าและเสียลูกค้าไป'}
+];
+let tombDone = Store.get('tombDone', {});
+function paintTombs(){
+  const box=$('#tombs'); box.innerHTML='';
+  TOMBS.forEach(t=>{
+    const d = el('div','card');
+    d.style.cssText='margin:0;cursor:pointer;text-align:center;padding:16px 13px;border-radius:14px 14px 10px 10px';
+    if(tombDone[t.id]){ d.style.background='var(--light)'; d.style.borderColor='var(--teal)'; }
+    d.innerHTML = '<div style="font-size:26px;line-height:1">&#9904;</div><b>'+esc(t.name)+'</b>'+
+      '<div class="mini">'+esc(t.kind)+'<br>'+esc(t.life)+'</div>'+
+      (tombDone[t.id] ? '<div class="tag" style="margin-top:7px">ชันสูตรแล้ว</div>' : '<div class="mini" style="margin-top:7px;color:var(--teal)">แตะเพื่อชันสูตร</div>');
+    d.onclick=()=>openTomb(t);
+    box.appendChild(d);
+  });
+}
+function sparkline(vals, w, h){
+  const max=Math.max(...vals), min=0;
+  const pts=vals.map((v,i)=>[ (i/(vals.length-1))*(w-8)+4, h-6-((v-min)/(max-min))*(h-16) ]);
+  const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  return '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" style="display:block">'+
+    '<path d="'+d+'" fill="none" stroke="#E85D4A" stroke-width="2.5" stroke-linecap="round"/>'+
+    '<circle cx="'+pts[pts.length-1][0].toFixed(1)+'" cy="'+pts[pts.length-1][1].toFixed(1)+'" r="4" fill="#E85D4A"/></svg>';
+}
+function openTomb(t){
+  const box=$('#autopsy');
+  box.innerHTML =
+    '<div class="card pop" style="border-color:var(--orange)">'+
+    '<span class="tag" style="background:#FDECEC;color:#8c2323">ใบชันสูตร</span>'+
+    '<h3 style="margin-top:6px">'+esc(t.name)+' · '+esc(t.kind)+'</h3>'+
+    '<div class="mini">ยอดขาย 12 เดือนสุดท้าย</div>'+ sparkline(t.sales, 320, 70) +
+    '<ul style="margin:10px 0 12px 18px;font-size:13.5px">'+ t.clues.map(c=>'<li>'+esc(c)+'</li>').join('') +'</ul>'+
+    '<h3>ตัดสินว่าร้านนี้ตายเพราะอะไร</h3><div id="tombOpts"></div><div id="tombFb"></div></div>';
+  const o=$('#tombOpts');
+  CONFIG.FAIL7.forEach((f,i)=>{
+    const b=el('button','opt', (i+1)+'. '+esc(f));
+    b.onclick=()=>answerTomb(t,i,b);
+    o.appendChild(b);
+  });
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function answerTomb(t, i, btn){
+  if(tombDone[t.id]) return;
+  $$('#tombOpts .opt').forEach((b,k)=>{ b.disabled=true;
+    if(k===t.ans) b.classList.add('right'); else if(k===i) b.classList.add('wrong'); });
+  const ok = i===t.ans;
+  $('#tombFb').innerHTML = '<div class="fb '+(ok?'ok':'no')+'">'+(ok?'ถูกต้อง · ':'สาเหตุหลักคือ “'+esc(CONFIG.FAIL7[t.ans])+'” · ')+esc(t.why)+'</div>';
+  tombDone[t.id]={pick:i, ok}; Store.set('tombDone', tombDone);
+  Cloud.bumpLocal('tomb', t.ans);
+  Cloud.send('vote', {topic:'tomb', shop:t.name, choice:CONFIG.FAIL7[i], correct:CONFIG.FAIL7[t.ans], team:Score.st.team});
+  Score.add(ok?8:3);
+  paintTombs(); paintVote();
+  if(Object.keys(tombDone).length>=TOMBS.length) finalVerdict();
+}
+function paintVote(){
+  const tally = {}; CONFIG.FAIL7.forEach(f=>tally[f]=0);
+  TOMBS.forEach(t=>{ if(tombDone[t.id]) tally[CONFIG.FAIL7[t.ans]]++; });
+  const local = Cloud.localTally('tomb');
+  const max = Math.max(1, ...Object.values(tally));
+  $('#voteChart').innerHTML = CONFIG.FAIL7.map((f,i)=>{
+    const v=tally[f];
+    return '<div style="margin-bottom:9px"><div style="display:flex;justify-content:space-between;font-size:13px">'+
+      '<span>'+esc(f)+'</span><b>'+v+'</b></div><div class="bar"><i style="width:'+(v/max*100)+'%;background:'+(i===0?'var(--orange)':'var(--teal)')+'"></i></div></div>';
+  }).join('');
+  $('#voteChart').insertAdjacentHTML('beforeend','<div class="mini">ชันสูตรแล้ว '+Object.keys(tombDone).length+'/'+TOMBS.length+' ร้าน'+(Cloud.on?' · รวมทั้งห้องแบบเรียลไทม์':' · โหมดออฟไลน์ นับเฉพาะเครื่องนี้')+'</div>');
+}
+function finalVerdict(){
+  if($('#voteVerdict').dataset.done) return;
+  $('#voteVerdict').dataset.done='1';
+  $('#voteVerdict').innerHTML =
+    '<div class="card pop" style="border-color:var(--orange);margin-top:12px">'+
+    '<span class="tag exam">ออกสอบ ข้อ 2</span>'+
+    '<h3 style="margin-top:6px">คำถามสุดท้าย ถ้าเลือกได้ข้อเดียว อะไรคือสาเหตุที่ <u>อันตรายที่สุด</u></h3>'+
+    '<div id="vOpts"></div><div id="vFb"></div></div>';
+  const o=$('#vOpts');
+  shuffle(CONFIG.FAIL7.map((f,i)=>({f,i}))).slice(0,4).concat([{f:CONFIG.FAIL7[0],i:0}])
+    .filter((v,i,a)=>a.findIndex(x=>x.i===v.i)===i)
+    .forEach(({f,i})=>{
+      const b=el('button','opt', esc(f));
+      b.onclick=()=>{
+        $$('#vOpts .opt').forEach(x=>x.disabled=true);
+        b.classList.add(i===0?'right':'wrong');
+        $('#vFb').innerHTML='<div class="fb '+(i===0?'ok':'no')+'">คำตอบคือ <b>ไม่เข้าใจตลาดและลูกค้า</b> — สังเกตว่าใน 6 ร้านที่เพิ่งชันสูตร ไม่ว่าจะตายด้วยเรื่องเงิน ทำเล หรือระบบงาน ทุกเรื่องเริ่มจากการไม่รู้ว่าลูกค้าคือใครและต้องการอะไร จำประโยคนี้ให้ขึ้นใจ</div>';
+        Score.add(i===0?10:4, 2);
+      };
+      o.appendChild(b);
+    });
+  const rx=$('#rxBox');
+  rx.innerHTML='<div id="rxOpts"></div><div id="rxFb"></div>';
+  CONFIG.SUCCESS7.forEach((s,i)=>{
+    const b=el('button','opt',(i+1)+'. '+esc(s));
+    b.onclick=()=>{
+      $$('#rxOpts .opt').forEach(x=>x.disabled=true); b.classList.add('picked');
+      $('#rxFb').innerHTML='<div class="fb info">สังเกตให้ดีครับ ทั้ง 7 ข้อนี้ไม่มีข้อไหนเขียนว่า “โชคดี” เลย — ทุกข้อสร้างได้ด้วยมือเราเอง และข้อสอบจะถามว่าปัจจัยความสำเร็จมีกี่ประการ คำตอบคือ <b>7 ประการ</b></div>';
+      Score.add(8, 1);
+    };
+    $('#rxOpts').appendChild(b);
+  });
+}
+
+/* ============================================================
+   สถานี 2 · เครื่องจำลองธุรกิจ 12 สัปดาห์
+   ============================================================ */
+const SIM = {
+  wk:0, a:0, b:0, ha:[0], hb:[0], timer:null,
+  eventsA:['สั่งวัตถุดิบตามใจชอบ','ออกเมนูใหม่ที่เจ้าของชอบ','ลดราคาแบบเดาใจ','ทำโปรฯ วันที่คนน้อยอยู่แล้ว','สต็อกแก้วเกินความจำเป็น','ไม่รู้ว่าลูกค้าหายไปไหน'],
+  eventsB:['สำรวจรสชาติที่ลูกค้าต้องการ','สั่งวัตถุดิบตามยอดขายจริง','ออกเมนูจากคำตอบลูกค้า 3 อันดับแรก','จัดโปรฯ ตรงช่วงเวลาที่คนแน่น','ตัดเมนูที่ขายไม่ออกทิ้ง','เพิ่มสาขาย่อยในจุดที่ข้อมูลชี้']
+};
+function simDraw(){
+  const cv=$('#simCv'); const ctx=cv.getContext('2d');
+  const W=cv.width=cv.clientWidth*2, H=cv.height=440; ctx.scale(1,1);
+  ctx.clearRect(0,0,W,H);
+  const all=SIM.ha.concat(SIM.hb); const mx=Math.max(10000,...all), mn=Math.min(-20000,...all);
+  const x=i=>40+(i/12)*(W-70), y=v=>H-40-((v-mn)/(mx-mn))*(H-70);
+  ctx.strokeStyle='#E0E4E8'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(40,y(0)); ctx.lineTo(W-30,y(0)); ctx.stroke();
+  ctx.font='20px sans-serif'; ctx.fillStyle='#6B7280'; ctx.fillText('กำไรสะสม (บาท)',44,34); ctx.fillText('0',12,y(0)+7);
+  const line=(h,c)=>{ ctx.strokeStyle=c; ctx.lineWidth=5; ctx.beginPath();
+    h.forEach((v,i)=> i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v))); ctx.stroke();
+    if(h.length){ ctx.fillStyle=c; ctx.beginPath(); ctx.arc(x(h.length-1),y(h[h.length-1]),8,0,7); ctx.fill(); } };
+  line(SIM.ha,'#E85D4A'); line(SIM.hb,'#0E7C7B');
+}
+function simStep(){
+  SIM.wk++;
+  const base=9000;
+  const da = base + (Math.random()*9000-6500) - (SIM.wk>4? SIM.wk*700 : 0);
+  const db = base + (Math.random()*2500-300) + (SIM.wk>3? SIM.wk*620 : 0) - (SIM.wk===1? 6000 : 0);
+  SIM.a+=da; SIM.b+=db; SIM.ha.push(SIM.a); SIM.hb.push(SIM.b);
+  $('#simWeek').textContent=SIM.wk;
+  $('#simA').textContent=fmt(Math.round(SIM.a))+' ฿'; $('#simA').style.color = SIM.a<0?'var(--red)':'var(--dark)';
+  $('#simB').textContent=fmt(Math.round(SIM.b))+' ฿'; $('#simB').style.color = SIM.b<0?'var(--red)':'var(--teal-d)';
+  $('#simAlog').textContent = rnd(SIM.eventsA);
+  $('#simBlog').textContent = SIM.wk===1 ? 'จ่ายค่าทำวิจัยตลาด 6,000 บาท' : rnd(SIM.eventsB);
+  simDraw();
+  if(SIM.wk>=12){
+    clearInterval(SIM.timer); SIM.timer=null;
+    const diff=Math.round(SIM.b-SIM.a);
+    $('#simEnd').innerHTML='<div class="fb info pop"><b>ครบ 12 สัปดาห์</b> · ร้าน B จ่ายค่าวิจัยตลาดไปครั้งเดียว 6,000 บาท แต่จบด้วยกำไรมากกว่าร้าน A อยู่ '+fmt(diff)+' บาท<br>'+
+      'ร้าน A ไม่ได้ขี้เกียจและไม่ได้โง่ เพียงแต่ตัดสินใจโดยไม่มีข้อมูล ทุกการเดาผิดคือต้นทุนที่จ่ายจริง</div>'+
+      '<div class="lesson">Market Research คือ การหาข้อมูลของลูกค้าหรือกลุ่มเป้าหมายในทุกมิติ เพื่อให้ธุรกิจตัดสินใจได้ <b>เร็วขึ้นและแม่นขึ้น</b> · ประโยชน์ 4 ข้อคือ ตัดสินใจแม่นยำ · ลดต้นทุน · เกิดสินค้าบริการใหม่ · เข้าใจตลาดมากขึ้น</div>';
+    Score.add(10, [3,5]);
+  }
+}
+$('#simStart').onclick=()=>{ if(SIM.timer) return; $('#simEnd').innerHTML=''; SIM.timer=setInterval(simStep,900); };
+$('#simReset').onclick=()=>{ clearInterval(SIM.timer); SIM.timer=null; Object.assign(SIM,{wk:0,a:0,b:0,ha:[0],hb:[0]});
+  $('#simWeek').textContent=0; $('#simA').textContent='0 ฿'; $('#simB').textContent='0 ฿';
+  $('#simAlog').textContent='ยังไม่เริ่ม'; $('#simBlog').textContent='ยังไม่เริ่ม'; $('#simEnd').innerHTML=''; simDraw(); };
+
+/* ---- เกมการ์ดจับคู่ประโยชน์ ---- */
+const BENEFITS=[
+  {id:1,t:'ทำให้การตัดสินใจต่างๆ รวดเร็วและแม่นยำมากขึ้น'},
+  {id:2,t:'ช่วยลดต้นทุนในการดำเนินธุรกิจ'},
+  {id:3,t:'ทำให้เกิดสินค้าและบริการใหม่ๆ'},
+  {id:4,t:'สามารถเข้าใจตลาดได้มากขึ้น'}
+];
+const CASES=[
+  {t:'โรงงานรองเท้าสำรวจแล้วพบว่าลูกค้าซื้อสีดำมากที่สุด จึงผลิตสีดำเพิ่มทันทีโดยไม่ต้องเดา', b:1, badge:14},
+  {t:'ร้านค้าเห็นจากข้อมูลว่าคนดูไลฟ์ช่วงสามทุ่มมากที่สุด จึงย้ายเวลาไลฟ์ไปตรงนั้น', b:1, badge:null},
+  {t:'บริษัทขนส่งวิเคราะห์เส้นทางที่มีพัสดุหนาแน่น แล้วจัดรถใหม่ ลดค่าน้ำมันลงได้มาก', b:2, badge:null},
+  {t:'ธนาคารพบว่าลูกค้าไม่อยากพกเงินสด จึงพัฒนา E-Wallet ขึ้นมาเป็นบริการใหม่', b:3, badge:15},
+  {t:'ร้านบุฟเฟต์เก็บข้อมูลว่าเมนูไหนถูกตักมากที่สุดในแต่ละช่วงเวลา แล้วจัดวัตถุดิบใหม่', b:2, badge:null},
+  {t:'แบรนด์จัดกลุ่มลูกค้าตามอายุและพฤติกรรม ทำให้รู้ว่าใครคือกลุ่มหลักของตัวเอง', b:4, badge:16}
+];
+let pickedCase=null, matched={};
+function paintMatch(){
+  const cc=$('#caseCol'), bc=$('#benCol'); cc.innerHTML=''; bc.innerHTML='';
+  CASES.forEach((c,i)=>{
+    const b=el('button','opt', esc(c.t));
+    if(matched[i]) b.classList.add('right');
+    if(pickedCase===i) b.classList.add('picked');
+    b.disabled=!!matched[i];
+    b.onclick=()=>{ pickedCase=i; paintMatch(); };
+    cc.appendChild(b);
+  });
+  BENEFITS.forEach(ben=>{
+    const b=el('button','opt','<b>'+ben.id+'.</b> '+esc(ben.t));
+    b.onclick=()=>tryMatch(ben.id, b);
+    bc.appendChild(b);
+  });
+  const done=Object.keys(matched).length;
+  $('#matchFb').innerHTML = done>=CASES.length
+    ? '<div class="fb ok pop">ครบทั้ง 6 เคส · จำให้แม่นสำหรับข้อสอบ: รองเท้าสีดำ → ตัดสินใจแม่นยำ · E-Wallet → เกิดบริการใหม่ · จัดกลุ่มลูกค้า → เข้าใจตลาด และถ้าโจทย์ถามว่าประโยชน์ของ Market Research มีอะไรบ้าง คำตอบคือ <b>ถูกทุกข้อ</b></div>'
+    : '<div class="mini">จับคู่แล้ว '+done+'/'+CASES.length+' เคส</div>';
+  if(done>=CASES.length && !matched._done){ matched._done=1; Score.add(12,[14,15,16,17]); }
+}
+function tryMatch(bid, btn){
+  if(pickedCase===null){ Score.toast('เลือกการ์ดเคสทางซ้ายก่อนครับ'); return; }
+  const c=CASES[pickedCase];
+  if(c.b===bid){ matched[pickedCase]=bid; if(c.badge) Score.add(4,c.badge); else Score.add(4); pickedCase=null; paintMatch(); }
+  else { btn.classList.add('shake'); setTimeout(()=>btn.classList.remove('shake'),450);
+    $('#matchFb').innerHTML='<div class="fb no">ยังไม่ใช่ ลองอ่านอีกทีว่าเคสนี้ทำให้ธุรกิจ “ได้อะไรเพิ่ม” กันแน่</div>'; }
+}
+
+/* ---- กระเป๋านักวิเคราะห์ ---- */
+const TOOLS=[
+  {n:'IBM SPSS', ok:true, w:'เครื่องมือหลักของนักวิจัยตลาดมืออาชีพ'},
+  {n:'Stata', ok:true, w:'โปรแกรมสถิติที่ใช้กันในงานวิจัย'},
+  {n:'Microsoft Excel', ok:true, w:'ตารางคำนวณที่วิเคราะห์ข้อมูลได้'},
+  {n:'Google Sheets', ok:true, w:'ตารางคำนวณออนไลน์ ฟรี และทำงานพร้อมกันได้หลายคน'},
+  {n:'R', ok:true, w:'ภาษาสำหรับงานสถิติและวิเคราะห์ข้อมูล'},
+  {n:'Microsoft Word', ok:false, w:'Word เป็นโปรแกรมพิมพ์เอกสาร ไม่ใช่เครื่องมือวิเคราะห์ข้อมูล'},
+  {n:'Adobe Photoshop', ok:false, w:'โปรแกรมตกแต่งภาพ ไม่เกี่ยวกับการวิเคราะห์ข้อมูล'},
+  {n:'PowerPoint', ok:false, w:'ใช้นำเสนอผลได้ แต่ไม่ใช่เครื่องมือวิเคราะห์'}
+];
+let bag=[];
+function paintTools(){
+  const s=$('#toolShelf'); s.innerHTML='';
+  TOOLS.forEach((t,i)=>{
+    const b=el('button','opt', esc(t.n));
+    b.style.textAlign='center'; b.style.marginBottom='0';
+    if(bag.includes(i)){ b.classList.add('right'); b.disabled=true; }
+    b.onclick=()=>{
+      if(t.ok){ bag.push(i); Score.add(3); paintTools(); }
+      else{ b.classList.add('shake','wrong'); setTimeout(()=>{b.classList.remove('shake','wrong');},600);
+        $('#bagBox').innerHTML='<div class="fb no pop"><b>ดีดกลับ</b> · '+esc(t.w)+'</div>'+bagHtml();
+        if(t.n==='Microsoft Word') Score.add(5, 4); }
+    };
+    s.appendChild(b);
+  });
+  $('#bagBox').innerHTML = bagHtml();
+}
+function bagHtml(){
+  const ok=TOOLS.filter(t=>t.ok).length;
+  return '<div class="lesson" style="margin-top:12px">ในกระเป๋าตอนนี้ '+bag.length+'/'+ok+' ชิ้น'+
+    (bag.length>=ok ? ' · ครบแล้ว จำไว้ว่าเครื่องมือหลักของนักวิจัยตลาดคือ <b>IBM SPSS</b> และที่ไม่ใช่เครื่องมือวิเคราะห์อย่างแน่นอนคือ <b>Microsoft Word</b>' : '')+'</div>';
+}
+
+/* ============================================================
+   สถานี 3 · มาตรวัดพลังข้อมูล
+   ============================================================ */
+async function paintMeter(){
+  let n = Store.get('meterN', 0);
+  if(Cloud.on){
+    const r = await Cloud.fetch('surveyCount');
+    if(r && r.ok && typeof r.count==='number'){ n=r.count; Store.set('meterN', n); }
+  }
+  const pct = clamp(n/CONFIG.classSize*100, 0, 100);
+  $('#meterNum').textContent = n+' คน';
+  $('#meterBar').style.width = pct+'%';
+  $('#meterMarks').innerHTML = CONFIG.unlock.map((u,i)=>{
+    const on = n>=u;
+    return '<div class="stat" style="'+(on?'background:var(--light);border-left:4px solid var(--teal)':'')+'">'+
+      '<div class="k">'+u+' คน</div><div style="font-size:13.5px;font-weight:600;margin-top:3px">'+
+      ['ปลดล็อกกราฟแบรนด์ (ยังเบลอ)','ปลดล็อกสถานีวิเคราะห์สัปดาห์หน้า','ปลดล็อก Insight ลับที่อาจารย์เองก็เพิ่งรู้'][i]+
+      '</div><div class="mini">'+(on?'ปลดล็อกแล้ว':'ยังขาดอีก '+(u-n)+' คน')+'</div></div>';
+  }).join('');
+  $('#meterNote').innerHTML = Cloud.on
+    ? 'ตัวเลขนี้ดึงสดจากชีตคำตอบของห้อง'
+    : 'ยังไม่ได้ตั้งค่าการเชื่อมชีต · อาจารย์พิมพ์จำนวนผู้ตอบด้วยมือได้ที่นี่: <input class="fld" id="meterManual" style="max-width:130px;display:inline-block" type="number" value="'+n+'">';
+  const mm=$('#meterManual');
+  if(mm) mm.onchange=()=>{ Store.set('meterN', +mm.value||0); paintMeter(); };
+  $('#surveyLink').href = CONFIG.surveyUrl;
+}
+$('#meterRefresh').onclick=paintMeter;
+
+const QTYPES=[
+  {q:'“เพศของคุณคือ” ชาย / หญิง', a:0},
+  {q:'“คุณรู้จักแบรนด์ชานมใดบ้าง” เลือกได้มากกว่า 1 ข้อ', a:1},
+  {q:'“ให้คะแนนความพึงพอใจ 1 ถึง 10”', a:2},
+  {q:'“อยากบอกอะไรกับร้านชานมที่คุณชอบ” พิมพ์ตอบได้อิสระ', a:3}
+];
+const QNAMES=['Single Answer','Multiple Answer','Rating Scale','Open Ended'];
+const QTOOL=['COUNT() COUNTIF()','COUNTIF() COUNTIFS()','COUNTIF() SUMIF() AVERAGEIF()','REGEXMATCH() REGEXEXTRACT() IF()'];
+function paintQType(){
+  const box=$('#qtypeBox'); box.innerHTML='';
+  QTYPES.forEach((item,qi)=>{
+    const c=el('div','card'); c.style.cssText='margin:0 0 11px;background:var(--panel)';
+    c.innerHTML='<div style="font-weight:600;margin-bottom:8px">'+esc(item.q)+'</div>';
+    const row=el('div','grid3');
+    QNAMES.forEach((nm,i)=>{
+      const b=el('button','opt', nm); b.style.cssText='text-align:center;margin:0;font-size:13px';
+      b.onclick=()=>{
+        Array.from(row.children).forEach(x=>x.disabled=true);
+        b.classList.add(i===item.a?'right':'wrong');
+        if(i!==item.a) row.children[item.a].classList.add('right');
+        c.insertAdjacentHTML('beforeend','<div class="fb '+(i===item.a?'ok':'no')+'">'+QNAMES[item.a]+' · ฟังก์ชันที่ใช้วิเคราะห์: '+QTOOL[item.a]+'</div>');
+        Score.add(i===item.a?4:2);
+        if(qi===QTYPES.length-1) Score.add(2,13);
+      };
+      row.appendChild(b);
+    });
+    c.appendChild(row); box.appendChild(c);
+  });
+}
+
+/* ============================================================
+   สถานี 4 · เกมจับเซลล์
+   ============================================================ */
+const GCOL=10, GROW=12;
+const G={on:false, t:60, score:0, combo:0, target:null, timer:null, mode:'find'};
+function buildGrid(){
+  const w=el('div'); const tb=el('table','tb'); tb.style.fontSize='12px';
+  const hr=el('tr'); hr.appendChild(el('th','',''));
+  for(let c=1;c<=GCOL;c++) hr.appendChild(el('th','',Formula.N2A(c)));
+  tb.appendChild(hr);
+  for(let r=1;r<=GROW;r++){
+    const tr=el('tr'); tr.appendChild(el('th','',String(r)));
+    for(let c=1;c<=GCOL;c++){
+      const a=Formula.N2A(c)+r;
+      const td=el('td','',''); td.dataset.a=a; td.style.cssText='height:26px;min-width:34px;cursor:pointer;text-align:center';
+      td.onclick=()=>tapCell(a, td);
+      tr.appendChild(td);
+    }
+    tb.appendChild(tr);
+  }
+  w.appendChild(tb); $('#gGrid').innerHTML=''; $('#gGrid').appendChild(w);
+}
+function newTarget(){
+  const a = Formula.N2A(1+Math.floor(Math.random()*GCOL)) + (1+Math.floor(Math.random()*GROW));
+  G.target=a;
+  $$('#gGrid td').forEach(td=>{ td.style.background=''; td.textContent=''; });
+  if(G.mode==='find'){ $('#gTarget').textContent=a; }
+  else{
+    $('#gTarget').textContent='ดูช่องที่กะพริบ';
+    const td=$$('#gGrid td').find(x=>x.dataset.a===a);
+    if(td){ td.style.background='var(--amber)'; }
+    $('#gAnswer').value=''; $('#gAnswer').focus();
+  }
+}
+function hit(ok){
+  if(ok){ G.combo++; const add=10+Math.min(G.combo,6)*2; G.score+=add;
+    $('#gFb').innerHTML='<div class="fb ok">ถูกต้อง '+G.target+' · คอมโบ x'+G.combo+' ได้ '+add+' คะแนน</div>'; }
+  else{ G.combo=0; G.score=Math.max(0,G.score-4);
+    $('#gFb').innerHTML='<div class="fb no">ยังไม่ใช่ · '+G.target+' คือคอลัมน์ '+G.target.match(/[A-Z]+/)[0]+' แถวที่ '+G.target.match(/\d+/)[0]+'</div>'; }
+  $('#gScore').textContent=G.score;
+  newTarget();
+}
+function tapCell(a, td){ if(!G.on || G.mode!=='find') return; hit(a===G.target); }
+$('#gAnswer').addEventListener('keydown', e=>{
+  if(e.key!=='Enter' || !G.on) return;
+  hit(($('#gAnswer').value||'').trim().toUpperCase()===G.target);
+});
+$('#gMode').onchange=()=>{ G.mode=$('#gMode').value; $('#gAnswerBox').classList.toggle('hide', G.mode!=='name'); };
+$('#gStart').onclick=()=>{
+  if(G.on) return;
+  G.on=true; G.t=60; G.score=0; G.combo=0; G.mode=$('#gMode').value;
+  $('#gAnswerBox').classList.toggle('hide', G.mode!=='name');
+  $('#gScore').textContent=0; $('#gFb').innerHTML='';
+  newTarget();
+  G.timer=setInterval(()=>{
+    G.t--; $('#gTime').textContent=G.t;
+    if(G.t<=0){
+      clearInterval(G.timer); G.on=false;
+      $('#gFb').innerHTML='<div class="fb info pop">หมดเวลา · ได้ '+G.score+' คะแนนในเกมนี้ '+
+        (G.score>=120?'ระดับมือโปร':'ลองอีกรอบให้ทะลุ 120')+'</div>';
+      Score.add(Math.round(G.score/10), 8);
+      Cloud.send('score', {game:'findcell', team:Score.st.team, sid:Score.st.sid, value:G.score});
+    }
+  },1000);
+};
+const GSQ=[
+  {q:'ข้อใดคือข้อดีของ Google Sheets', o:['เป็นบริการฟรีจาก Google','ต้องซื้อ License รายปี','ติดตั้งลงเครื่องก่อนใช้','ใช้ได้เฉพาะบนวินโดวส์'], a:0, badge:6},
+  {q:'ไฟล์ Google Sheets หนึ่งไฟล์ ทำงานพร้อมกันได้กี่คน', o:['ได้ทีละคนเท่านั้น','ได้หลายคนพร้อมกันในเวลาเดียวกัน','ได้สองคนเท่านั้น','ต้องผลัดกันเปิดทีละคน'], a:1, badge:9},
+  {q:'ใครแก้ไขไฟล์ Google Sheets ได้บ้าง', o:['เจ้าของไฟล์เท่านั้น','ผู้ที่เจ้าของแชร์สิทธิ์ให้ด้วย','ผู้ดูแลระบบของ Google','ไม่มีใครแก้ได้หลังบันทึก'], a:1, badge:10}
+];
+function paintGsQuiz(){
+  const box=$('#gsQuiz'); box.innerHTML='';
+  GSQ.forEach(item=>{
+    const c=el('div','card'); c.style.cssText='margin:0 0 11px;background:var(--panel)';
+    c.innerHTML='<div style="font-weight:600;margin-bottom:8px">'+esc(item.q)+'</div>';
+    item.o.forEach((o,i)=>{
+      const b=el('button','opt', esc(o));
+      b.onclick=()=>{
+        Array.from(c.querySelectorAll('.opt')).forEach(x=>x.disabled=true);
+        b.classList.add(i===item.a?'right':'wrong');
+        if(i!==item.a) c.querySelectorAll('.opt')[item.a].classList.add('right');
+        Score.add(i===item.a?5:2, item.badge);
+      };
+      c.appendChild(b);
+    });
+    box.appendChild(c);
+  });
+}
+
+/* ============================================================
+   สถานี 5 · เครื่องคิดเลขปริศนา
+   ============================================================ */
+const PUZZLES=[
+  {
+    title:'ด่าน 1 · Function คืออะไร',
+    brief:'ก่อนพิมพ์สูตรแรกในชีวิต ตอบคำถามนี้ให้ได้ก่อน',
+    quiz:{q:'ฟังก์ชัน (Function) ใน Google Sheets หมายถึงอะไร',
+      o:['สูตรสำเร็จรูปที่สร้างขึ้นเพื่อการคำนวณค่าต่างๆ ตามจุดประสงค์','ชื่อของไฟล์ที่บันทึกไว้','ปุ่มสำหรับพิมพ์เอกสารออกทางเครื่องพิมพ์','การตั้งค่าสีพื้นหลังของเซลล์'], a:0},
+    badge:7
+  },
+  {
+    title:'ด่าน 2 · ทำให้ได้ 55',
+    brief:'ดูตัวเลขในคอลัมน์ A ด้านล่าง แล้วทายก่อนว่า =SUM(A1:A10) จะได้เท่าไร แล้วค่อยพิมพ์สูตรลงเซลล์ C1',
+    data:(()=>{const d={}; for(let i=1;i<=10;i++) d['A'+i]=i; d.B1='ผลรวม 1 ถึง 10'; return d;})(),
+    previewCells:['A1','A2','A3','A4','A5','A6','A7','A8','A9','A10'],
+    predict:{label:'ทายผลลัพธ์เป็นตัวเลข', check:v=>+v===55,
+      okMsg:'ทายแม่นมาก', noMsg:'ยังไม่ใช่ แต่ไม่เป็นไร ลองรันดูของจริง'},
+    goal:{cell:'C1', want:55, hint:'พิมพ์ที่ C1 ว่า  =SUM(A1:A10)'},
+    lesson:'SUM(1,2,3,...,10) = 55 · ตัวเลขนี้ออกสอบตรง ๆ จำไว้เลย',
+    badge:12
+  },
+  {
+    title:'ด่าน 3 · กับดักของ AVERAGE',
+    brief:'ดูค่าจริงในคอลัมน์ A ด้านล่าง (มีคำว่า “ไม่ตอบ” ปนอยู่ 2 ช่อง) แล้วทายก่อนว่า =AVERAGE(A1:A6) จะได้เท่าไร',
+    data:{A1:10, A2:20, A3:'ไม่ตอบ', A4:30, A5:'ไม่ตอบ', A6:40, B1:'ค่าเฉลี่ยจริง ๆ ควรเป็นเท่าไร'},
+    previewCells:['A1','A2','A3','A4','A5','A6'],
+    predict:{label:'ทายค่าเฉลี่ยเป็นตัวเลข', check:v=>+v===25,
+      okMsg:'ทายถูก คุณเข้าใจกลไกนี้แล้ว', noMsg:'คนส่วนใหญ่ตอบ 16.67 เพราะคิดว่าข้อความนับเป็น 0 · ลองรันของจริงดู'},
+    goal:{cell:'C1', want:25, hint:'พิมพ์ที่ C1 ว่า  =AVERAGE(A1:A6)'},
+    lesson:'AVERAGE จะ <b>ละเว้นเซลล์ที่เป็นข้อความ</b> ไม่ได้นับเป็น 0 · จึงหารด้วย 4 ไม่ใช่ 6 → ได้ 25 ไม่ใช่ 16.67',
+    badge:11
+  },
+  {
+    title:'ด่าน 4 · นับให้เป็นด้วย COUNTIF',
+    brief:'ตารางนี้คือคำตอบแบรนด์ชานมที่เพื่อนในห้องเลือก (ดูค่าจริงด้านล่าง) · หา “จำนวนคนที่ตอบ A” ให้ได้',
+    data:{A1:'แบรนด์',A2:'A',A3:'B',A4:'A',A5:'C',A6:'A',A7:'B',A8:'A',A9:'C',A10:'A',B1:'จำนวนคนที่ตอบ A'},
+    previewCells:['A2','A3','A4','A5','A6','A7','A8','A9','A10'],
+    predict:{label:'นับด้วยตาก่อน ตอบเป็นตัวเลข', check:v=>+v===5,
+      okMsg:'สายตาดี', noMsg:'ลองนับใหม่อีกรอบ แล้วให้ COUNTIF ช่วยตรวจ'},
+    goal:{cell:'C1', want:5, hint:'พิมพ์ที่ C1 ว่า  =COUNTIF(A2:A10,"A")'},
+    lesson:'COUNTIF ใช้นับเฉพาะสิ่งที่ตรงเงื่อนไข · เป็นฟังก์ชันหลักของคำถามแบบ Single Answer และ Multiple Answer',
+    badge:null
+  },
+  {
+    title:'ด่าน 5 · สนามซ้อมอิสระ',
+    brief:'ตารางว่างให้ลองทุกฟังก์ชันที่เรียนมา · ลองพิมพ์ =SUM, =AVERAGE, =COUNT, =COUNTIF ดูให้หนำใจ',
+    data:{A1:5,A2:8,A3:'ข้อความ',A4:12,A5:15,B1:'ลองเล่นได้ตามใจ'},
+    free:true, badge:null
+  }
+];
+let pIdx=0, pSheet=null;
+function paintPuzzleNav(){
+  const n=$('#puzzleNav'); n.innerHTML='';
+  PUZZLES.forEach((p,i)=>{
+    const b=el('button','btn '+(i===pIdx?'':'ghost'), 'ด่าน '+(i+1));
+    b.onclick=()=>{ pIdx=i; paintPuzzle(); }; n.appendChild(b);
+  });
+}
+function dataPreview(data, cells){
+  return '<div class="scroll" style="margin-bottom:11px"><table class="tb" style="text-align:center">'+
+    '<tr>'+cells.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr>'+
+    '<tr>'+cells.map(c=>'<td>'+esc(String(data[c]))+'</td>').join('')+'</tr>'+
+    '</table></div>';
+}
+function paintPuzzle(){
+  paintPuzzleNav();
+  const p=PUZZLES[pIdx], box=$('#puzzleBox');
+  box.innerHTML='<h3>'+esc(p.title)+'</h3><p class="lead">'+p.brief+'</p>'+
+    (p.quiz?'<div id="pQuiz"></div>':'')+
+    (p.predict?'<div class="card" style="background:var(--panel);margin:0 0 12px"><h3>ขั้นที่ 1 · ดูค่าจริงแล้วทายก่อน</h3>'+
+      (p.previewCells? dataPreview(p.data, p.previewCells) : '')+
+      '<div class="ctrls"><input class="fld" id="pPred" style="max-width:190px" placeholder="'+esc(p.predict.label)+'" inputmode="decimal">'+
+      '<button class="btn" id="pPredBtn">ยืนยันคำตอบที่ทาย</button></div><div id="pPredFb"></div></div>':'')+
+    (p.data?'<div id="pSheetWrap" class="'+(p.predict?'hide':'')+'"><h3>ขั้นที่ 2 · รันของจริง</h3>'+
+      '<div class="mini" style="margin-bottom:8px">'+(p.goal?esc(p.goal.hint):'พิมพ์สูตรได้ตามใจ')+'</div>'+
+      '<div id="pSheet"></div><div id="pGoalFb"></div></div>':'');
+  if(p.quiz){
+    const q=$('#pQuiz');
+    q.innerHTML='<div style="font-weight:600;margin-bottom:8px">'+esc(p.quiz.q)+'</div>';
+    p.quiz.o.forEach((o,i)=>{
+      const b=el('button','opt', esc(o));
+      b.onclick=()=>{
+        $$('#pQuiz .opt').forEach(x=>x.disabled=true);
+        b.classList.add(i===p.quiz.a?'right':'wrong');
+        if(i!==p.quiz.a) $$('#pQuiz .opt')[p.quiz.a].classList.add('right');
+        q.insertAdjacentHTML('beforeend','<div class="fb ok">Function คือ <b>สูตรสำเร็จรูปที่สร้างขึ้นเพื่อการคำนวณค่าต่างๆ ตามจุดประสงค์</b> — นิยามนี้ออกสอบตรงตัว</div>');
+        Score.add(i===p.quiz.a?6:2, p.badge);
+      };
+      q.appendChild(b);
+    });
+  }
+  if(p.data){
+    pSheet = MiniSheet('#pSheet', {rows:10, cols:4, data:JSON.parse(JSON.stringify(p.data)),
+      start: p.goal? p.goal.cell : 'C1',
+      onChange:(api)=>{
+        if(!p.goal) return;
+        const v=api.value(p.goal.cell);
+        if(typeof v==='number' && Math.abs(v-p.goal.want)<1e-9){
+          if($('#pGoalFb').dataset.done) return;
+          $('#pGoalFb').dataset.done='1';
+          $('#pGoalFb').innerHTML='<div class="fb ok pop"><b>ผ่านด่าน</b> · '+p.lesson+'</div>';
+          Score.add(10, p.badge||undefined);
+        }
+      }});
+  }
+  if(p.predict){
+    $('#pPredBtn').onclick=()=>{
+      const v=$('#pPred').value.trim(); if(v==='') return;
+      const ok=p.predict.check(v);
+      $('#pPredFb').innerHTML='<div class="fb '+(ok?'ok':'no')+'">'+(ok?p.predict.okMsg:p.predict.noMsg)+'</div>';
+      $('#pSheetWrap').classList.remove('hide');
+      Score.add(ok?6:3);
+      Cloud.send('predict', {puzzle:p.title, team:Score.st.team, guess:v, correct:ok});
+      $('#pPredBtn').disabled=true; $('#pPred').disabled=true;
+      if(pSheet) pSheet.refresh();
+    };
+  }
+}
+
+/* ============================================================
+   สถานี 6 · ปิดคาบ
+   ============================================================ */
+function paintBadges(){
+  const s=Score.st;
+  $('#badgeGrid').innerHTML = EXAM.map(e=>{
+    const on=s.badges.includes(e.n);
+    return '<div class="stat" style="'+(on?'background:var(--light);border-left:4px solid var(--teal)':'opacity:.5')+'">'+
+      '<div class="k">ข้อ '+e.n+'</div><div style="font-size:13px;font-weight:600;line-height:1.4;margin-top:2px">'+
+      (on? esc(e.t) : 'ยังไม่ได้เก็บ')+'</div></div>';
+  }).join('');
+  $('#badgeSum').innerHTML='เก็บได้ <b>'+s.badges.length+' จาก 20 ดวง</b> · ดวงที่เหลือส่วนใหญ่อยู่ในคาบหน้า (IF · CHOOSE+MONTH · การวิเคราะห์จริง) — มาให้ครบนะครับ';
+  $('#lockBox').innerHTML =
+    '<div style="position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.2)">'+
+      '<div style="filter:blur(9px);padding:18px;background:#0e2a2a">'+
+        '<div style="display:flex;gap:9px;align-items:flex-end;height:120px">'+
+          [72,54,96,38,61,25].map(h=>'<div style="flex:1;height:'+h+'%;background:#3ad0c8;border-radius:6px 6px 0 0"></div>').join('')+
+        '</div><div style="color:#cfe6e5;margin-top:9px">แบรนด์ที่ห้องเราชอบที่สุดคือ ████████</div></div>'+
+      '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:36px">&#128274;</div>'+
+    '</div>';
+  $('#carry').innerHTML =
+    '<div class="grid2"><div class="stat"><div class="k">1 · รหัสทีมของคุณ</div><div class="v">'+esc(s.team||'ยังไม่ได้ตั้งร้าน')+'</div>'+
+    '<div class="mini">ใช้กรอกตอนเปิดแล็บสัปดาห์หน้าเพื่อดึงคะแนนกลับมา</div></div>'+
+    '<div class="stat"><div class="k">2 · ตอบแบบสำรวจหรือยัง</div><div class="v">ยังตอบได้ถึงคืนนี้</div>'+
+    '<div class="mini">ยิ่งมีคนตอบมาก สัปดาห์หน้ายิ่งมีของให้ผ่า</div></div></div>';
+}
+function tickCountdown(){
+  const t=new Date(CONFIG.revealAt)-new Date();
+  if(t<=0){ $('#countdown').textContent='ปลดล็อกแล้ว'; return; }
+  const d=Math.floor(t/864e5), h=Math.floor(t/36e5)%24, m=Math.floor(t/6e4)%60, s=Math.floor(t/1e3)%60;
+  $('#countdown').textContent = d+' วัน '+String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+/* แปลง CONFIG.revealAt เป็นข้อความวันที่ไทยอัตโนมัติ — อาจารย์แก้แค่ CONFIG.revealAt เมื่อนำไปใช้เทอมอื่น ข้อความนี้จะตามให้เอง
+   หมายเหตุ: อ่านวัน-เวลาตรงจากค่าที่ตั้งไว้ (ไม่ผ่านไทม์โซนของเครื่องผู้ชม) เพื่อให้แสดงเวลาไทยถูกต้องเสมอไม่ว่าจะเปิดจากที่ไหน */
+function paintCountdownLabel(){
+  const el=$('#countdownLabel'); if(!el) return;
+  try{
+    const m = String(CONFIG.revealAt).match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+    if(!m) throw new Error('รูปแบบวันที่ไม่ถูกต้อง');
+    const y=+m[1], mo=+m[2], da=+m[3], hh=m[4], mi=m[5];
+    const wd=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'][new Date(y,mo-1,da).getDay()];
+    const moName=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'][mo-1];
+    el.textContent='นับถอยหลังถึง วัน'+wd+'ที่ '+da+' '+moName+' '+(y+543)+' เวลา '+hh+':'+mi+' น.';
+  }catch(e){ /* ถ้า CONFIG.revealAt ไม่ถูกต้อง ให้คงข้อความทั่วไปไว้ */ }
+}
+
+/* ============================================================
+   เริ่มระบบ
+   ============================================================ */
+initTabs(); Score.paint(); paintShop();
+paintTombs(); paintVote();
+if(Object.keys(tombDone).length>=TOMBS.length) finalVerdict();
+paintMatch(); paintTools(); paintQType(); buildGrid(); paintGsQuiz(); paintPuzzle();
+paintMeter(); paintBadges(); paintCountdownLabel(); tickCountdown(); setInterval(tickCountdown,1000);
+setTimeout(simDraw,60);
+window.addEventListener('resize', ()=>{ try{simDraw();}catch(e){} });
+$$('.tab').forEach((t,i)=> t.addEventListener('click', ()=>{ if(i===6) paintBadges(); if(i===2) setTimeout(simDraw,80); }));
+</script>
+
+<script>
+/* เติมรหัสนักศึกษาที่กรอกไว้หน้าประตูเข้าสนามแข่งให้อัตโนมัติ (เฉพาะช่องที่ยังว่าง) */
+window.ramGatePrefill = function(){
+  try{
+    var v=JSON.parse(localStorage.getItem('ram1212_gate')||'null');
+    if(!v || v.mode!=='sid' || !v.sid) return;
+    ['inSid','cSid'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el && !el.value) el.value=v.sid;
+    });
+  }catch(e){}
+};
+window.addEventListener('load', window.ramGatePrefill);
+</script>
+</body>
+</html>
